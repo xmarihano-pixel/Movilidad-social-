@@ -1,0 +1,15 @@
+# Datos (no subir datos sensibles o restringidos)
+data/raw/*
+data/interim/*
+data/processed/*
+data/external/*
+!data/**/.gitkeep
+models/*
+!models/.gitkeep
+# Python / Jupyter
+__pycache__/
+*.pyc
+.ipynb_checkpoints/
+.venv/
+.env
+.DS_Store
