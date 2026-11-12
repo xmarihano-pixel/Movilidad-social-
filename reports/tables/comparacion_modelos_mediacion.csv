@@ -1,0 +1,7 @@
+Modelo,AUC CV (media),AUC CV (desv.),AUC prueba,Exactitud balanceada prueba,F1 prueba,Brier prueba
+Base: siempre la clase mayoritaria,0.5,0.0,0.5,0.5,0.682,0.25
+Base: sólo índice de origen,0.531,0.022,0.556,0.533,0.642,0.248
+Regresión logística,0.737,0.012,0.737,0.664,0.683,0.208
+Árbol de decisión,0.685,0.03,0.685,0.646,0.644,0.224
+Random forest,0.729,0.02,0.743,0.66,0.681,0.213
+Gradient boosting,0.72,0.014,0.743,0.687,0.7,0.206

@@ -7,4 +7,8 @@ statsmodels
 shap
 jupyter
 pyarrow
+pyreadstat
+openpyxl
+nbformat
+nbconvert
 pytest

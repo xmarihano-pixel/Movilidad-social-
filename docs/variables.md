@@ -1,56 +1,67 @@
 # Variables
 
-> **Estado:** lista de trabajo. Son las variables que **esperamos** encontrar. Los nombres reales se llenarán cuando tengamos el diccionario oficial de la base.
+> **Estado:** ✅ variables reales de la ESRU-EMOVI 2023, revisadas contra el diccionario oficial (`Diccionario ESRU EMOVI 2023.xlsx`). El código que las construye está en `src/data/emovi.py`.
 
 ## 1. Variable objetivo (lo que queremos explicar)
 
-| Variable | Qué mide | Tipo | Opciones |
-|---|---|---|---|
-| `movilidad` | Si la persona subió, se quedó o bajó respecto a su hogar de origen | Categórica | Ascenso / Permanencia / Descenso |
-| `posicion_destino` | Posición socioeconómica actual (por ejemplo, quintil 1 a 5) | Ordinal | 1 (más bajo) a 5 (más alto) |
-
-La forma exacta de medirla se decide en la Fase 2 y **se congela antes de ver resultados**.
-
-## 2. Origen (cómo vivía la persona a los 14 años)
-
-| Variable | Qué mide | Tipo |
+| Variable | Qué mide | Cómo se construye |
 |---|---|---|
-| `escolaridad_padre` | Años o nivel de estudio del padre | Ordinal |
-| `escolaridad_madre` | Años o nivel de estudio de la madre | Ordinal |
-| `ocupacion_padre` | Tipo de trabajo del padre o principal proveedor | Categórica |
-| `bienes_hogar_origen` | Índice de bienes y servicios en casa (luz, agua, auto, etc.) | Numérica |
-| `tamano_hogar_origen` | Número de personas en el hogar | Numérica |
-| `localidad_origen` | Rural o urbana | Categórica |
-| `region_origen` | Región o estado donde creció | Categórica |
+| `sigue_q1` ⭐ | Nació en el 20% más pobre **y** sigue en el 20% más pobre | `q_origen == 1` y `q_destino == 1` (sí = 1, no = 0) |
+| `movilidad` | Subió, se quedó o bajó | Ascenso / Permanencia / Descenso según `q_destino − q_origen` |
+| `q_origen` / `q_destino` | Quintil de riqueza (1 = 20% más pobre) | Quintiles ponderados del índice, dentro de cada cohorte |
+| `indice_origen` / `indice_destino` | Riqueza del hogar | Primer componente principal de los bienes del hogar |
 
-## 3. Destino (cómo vive hoy)
+## 2. Origen (a los 14 años) → predictores
 
-| Variable | Qué mide | Tipo |
+| Variable | Qué mide | Pregunta EMOVI |
 |---|---|---|
-| `escolaridad` | Años o nivel de estudio de la persona | Ordinal |
-| `ocupacion` | Tipo de trabajo actual | Categórica |
-| `bienes_hogar_actual` | Índice de bienes y servicios en su casa actual | Numérica |
-| `ingreso` | Ingreso del hogar o personal (si existe) | Numérica |
+| `indice_origen` | Riqueza del hogar a los 14 años | p25–p32 (45 bienes y servicios, piso, autos, cuartos) |
+| `educ_madre`, `educ_padre` | Escolaridad de los padres (4 niveles + "No sabe / ausente") | educm, educp |
+| `clase_padre` | Ocupación del principal sostén económico | clasep |
+| `madre_trabajaba` | La madre trabajaba | p51 |
+| `vivia_ambos_padres` | Vivía con mamá y papá | p39 |
+| `sosten_madre` | La madre era el principal sostén | p40 |
+| `personas_hogar_14`, `hacinamiento_14` | Tamaño del hogar y personas por cuarto | p22, p24 |
+| `hermanos`, `orden_nacimiento` | Número de hermanos y lugar entre ellos | p57, p58 |
+| `localidad_14` | Metrópoli … pueblo de menos de 2,500 habitantes | p21 |
+| `region_14` | Norte, Norte-occidente, Centro-norte, Centro, Sur | region_14 |
+| `o_p33a`…`o_p33h` | Servicios en el barrio (alumbrado, escuelas, salud, seguridad…) | p33 |
 
-## 4. Características de la persona
+## 3. Características dadas de la persona → predictores
 
-| Variable | Qué mide | Tipo |
+| Variable | Qué mide | Pregunta EMOVI |
 |---|---|---|
-| `sexo` | Sexo | Categórica |
-| `edad` | Edad en años | Numérica |
-| `lengua_indigena` | Habla o sus padres hablaban lengua indígena | Binaria |
-| `tono_piel` | Tono de piel (escala de la encuesta, si existe) | Ordinal |
-| `region_actual` | Región o estado donde vive hoy | Categórica |
+| `mujer` | Sexo | sexo |
+| `cohorte` | Grupo de edad (25-34, 35-44, 45-54, 55-64) | cohorte |
+| `lengua_indigena` | Habla lengua indígena | p111 |
+| `tono_piel` | Tono de piel autopercibido: Oscuro (A-E), Medio (F-G), Claro (H-K) | p112 |
+| `autoadscripcion` | Se considera indígena, negra, blanca, mestiza… | p110 |
 
-## 5. Técnicas (no son para el modelo)
+## 4. Destino y trayectoria → **no** son predictores del modelo principal
+
+| Variable | Qué mide | Uso |
+|---|---|---|
+| `indice_destino` | Riqueza del hogar actual (p88–p99) | Construye el objetivo |
+| `educ` | Escolaridad propia | Solo en el modelo de mediación |
+| `migro_entidad` | Vive en otro estado que a los 14 | Solo en el modelo de mediación |
+| `ingreso_pc`, `clase` | Ingreso per cápita y ocupación actual | Validación y robustez |
+
+## 5. Técnicas
 
 | Variable | Para qué sirve |
 |---|---|
-| `id` | Identificar a cada persona |
-| `factor_expansion` | Ponderador para que los resultados representen a la población |
+| `id` | Folio de la persona |
+| `factor` | Factor de expansión: hace que los resultados representen a 60 millones de personas |
+| `upm`, `estrato` | Diseño muestral, para calcular errores estándar correctos |
+
+## 6. Contexto por estado (`data/processed/contexto_estatal_2022.csv`)
+
+| Variable | Fuente |
+|---|---|
+| `pobreza_pct`, `pobreza_extrema_pct`, `ingreso_pc_mensual` | CONEVAL 2022 |
+| `informalidad_pct` | ENOE 2022 (promedio de 4 trimestres) |
 
 ## Reglas
-
-- ⚠️ Variables como `sexo`, `lengua_indigena` o `tono_piel` son **sensibles**: se usan para medir desigualdad, no para juzgar personas.
-- ⚠️ Las variables de **destino** no pueden usarse para predecir la movilidad (sería hacer trampa: *leakage*).
-- Cada cambio a esta lista se anota en `docs/decisions/`.
+- ⚠️ `tono_piel`, `lengua_indigena` y `autoadscripcion` son **sensibles**: se usan para medir desigualdad, no para juzgar ni decidir sobre personas.
+- ⚠️ Las variables de destino no entran al modelo principal (sería hacer trampa: *leakage*).
+- Cada cambio queda registrado en `docs/decisions/bitacora_decisiones.md`.

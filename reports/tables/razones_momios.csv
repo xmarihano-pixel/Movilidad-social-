@@ -1,0 +1,22 @@
+,Razón de momios,IC 95% inf,IC 95% sup,p-valor
+educ_madre = No sabe / ausente,0.746,0.442,1.257,0.271
+educ_madre = Secundaria o más,0.724,0.417,1.258,0.252
+educ_padre = No sabe / ausente,1.572,1.05,2.353,0.028
+educ_padre = Secundaria o más,0.978,0.553,1.729,0.939
+localidad_14 = Ciudad chica,0.478,0.176,1.3,0.148
+localidad_14 = Ciudad grande,0.471,0.156,1.423,0.182
+localidad_14 = Ciudad mediana,0.467,0.165,1.318,0.15
+"localidad_14 = Pueblo (<2,500)",0.771,0.303,1.966,0.586
+region_14 = Centro-norte,0.574,0.326,1.012,0.055
+region_14 = Norte,0.398,0.192,0.825,0.013
+region_14 = Norte-occidente,0.685,0.381,1.231,0.206
+region_14 = Sur,1.886,1.314,2.705,0.001
+tono_piel = Claro (H-K),1.032,0.691,1.541,0.878
+tono_piel = Oscuro (A-E),1.312,0.913,1.884,0.142
+cohorte = 35-44,0.463,0.292,0.733,0.001
+cohorte = 45-54,0.245,0.152,0.394,0.0
+cohorte = 55-64,0.182,0.098,0.337,0.0
+indice_origen,0.65,0.526,0.803,0.0
+mujer,1.303,0.981,1.729,0.067
+lengua_indigena,1.906,1.245,2.918,0.003
+hermanos,1.01,0.963,1.06,0.684

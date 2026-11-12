@@ -1,0 +1,27 @@
+Variable,Pérdida de AUC,desv.
+region_14,0.0712,0.0106
+cohorte,0.0503,0.0122
+indice_origen,0.0468,0.0078
+autoadscripcion,0.0164,0.0052
+educ_padre,0.0105,0.0045
+lengua_indigena,0.0098,0.0051
+localidad_14,0.0097,0.0044
+o_p33e,0.0088,0.0015
+personas_hogar_14,0.0082,0.004
+o_p33f,0.008,0.0025
+madre_trabajaba,0.0072,0.0031
+o_p33b,0.0045,0.0015
+educ_madre,0.0025,0.0012
+clase_padre,0.0016,0.0033
+o_p33h,0.0015,0.0007
+hacinamiento_14,0.0012,0.0013
+hermanos,0.001,0.0018
+mujer,0.0006,0.0007
+orden_nacimiento,-0.0002,0.0004
+o_p33d,-0.0008,0.001
+tono_piel,-0.001,0.0014
+o_p33g,-0.0027,0.0022
+o_p33c,-0.0034,0.0024
+o_p33a,-0.0039,0.0023
+sosten_madre,-0.0041,0.0029
+vivia_ambos_padres,-0.0042,0.0018

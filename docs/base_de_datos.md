@@ -1,44 +1,50 @@
 # Base de datos
 
-> **Estado:** provisional. Nada de esto está confirmado hasta hacer la auditoría de datos (Fase 3 del roadmap).
+> **Estado:** ✅ auditada (notebook `01_data_audit`). Puerta de datos: 🟢 **VERDE**.
 
-## ¿Qué necesitamos que tenga la base?
+## La idea clave
 
 Para medir movilidad social necesitamos **dos fotos de la misma persona**:
 
-| Foto | Pregunta que responde | Ejemplo |
+| Foto | Pregunta que responde | En la EMOVI |
 |---|---|---|
-| **Origen** | ¿Cómo vivía cuando era niño(a)? | Escolaridad de los padres, bienes en casa a los 14 años |
-| **Destino** | ¿Cómo vive hoy de adulto(a)? | Su escolaridad, ocupación, ingreso o bienes actuales |
+| **Origen** | ¿Cómo vivía a los 14 años? | Bienes y servicios del hogar, escolaridad y ocupación de los padres, tipo de localidad, región |
+| **Destino** | ¿Cómo vive hoy de adulto(a)? | Bienes y servicios del hogar actual, escolaridad, ocupación, ingreso |
 
-Si la base solo tiene la foto de **hoy**, no podemos hablar de movilidad: solo de desigualdad.
+## Fuentes recibidas
 
-## Fuentes candidatas
-
-| Fuente | Quién la hace | ¿Tiene origen y destino? | Uso en el proyecto |
+| Fuente | Archivo en el repo | Qué tiene | Uso |
 |---|---|---|---|
-| **Encuesta ESRU de Movilidad Social (ESRU-EMOVI)** | Centro de Estudios Espinosa Yglesias (CEEY) | Sí, con preguntas retrospectivas | **Fuente principal** (por verificar) |
-| ENIGH | INEGI | No, solo situación actual | Contexto de ingreso y gasto |
-| ENOE | INEGI | No, solo situación actual | Contexto de empleo e informalidad |
-| Medición de pobreza | CONEVAL | No (datos por estado y municipio) | Contexto territorial |
+| **ESRU-EMOVI 2023** (CEEY) | `data/esru_emovi.zip` | 17,843 personas de 25 a 64 años, 296 variables, factor de expansión y diseño muestral | ✅ **Fuente principal** |
+| **CONEVAL 2022** | Release `base-datos-Coneval` → `pobreza_22.dta` | Medición de pobreza por persona (construida con la ENIGH 2022) | Pobreza por estado (contexto) |
+| **ENOE 2022** (INEGI) | Release `Enoe-INEGI` → 4 trimestres | Encuesta de empleo | Informalidad laboral por estado (contexto) |
+| **ENIGH 2022** (INEGI) | `data/enigh2022_ns_*.zip` (7 tablas) | Ingresos y gastos de hogares | No se procesa aparte: ya está incluida en CONEVAL (decisión D03) |
 
-**Importante:** estas encuestas **no se pueden unir persona por persona**, porque no comparten identificadores. Solo se pueden combinar por estado o región.
+**Importante:** estas encuestas **no se pueden unir persona por persona**, porque no comparten identificadores. CONEVAL y ENOE solo se usan resumidas por estado.
 
-## Dónde guardar los datos
+## Calidad de los datos (resumen)
+
+| Revisión | Resultado |
+|---|---|
+| Folios duplicados | 0 |
+| Bienes a los 14 años con "No sabe" | < 5% por variable |
+| Escolaridad del padre / madre faltante | 19% / 10%. Se conserva como categoría "No sabe / ausente" |
+| Ocupación actual faltante | 33% (no trabaja). No se usa como predictor |
+| Validación con cifras oficiales | Pobreza nacional 36.3% y pobreza extrema 7.1%. ✅ Coinciden con lo publicado por CONEVAL para 2022 |
+
+## Cómo reproducir
 
 ```text
 data/
-├── raw/        ← archivos originales tal cual se descargan (nunca se editan)
-├── interim/    ← versiones intermedias mientras se limpian
-├── processed/  ← la tabla final lista para los modelos
-└── external/   ← datos de contexto (CONEVAL, INEGI por estado, etc.)
+├── esru_emovi.zip, enigh2022_*.zip   ← subidos al repo
+└── raw/                              ← aquí se descomprimen (no se suben a GitHub)
+    ├── esru_emovi/Data/entrevistado_2023.dta
+    ├── coneval/pobreza_22.dta        ← descargar del Release "base-datos-Coneval"
+    └── enoe/*.zip                    ← descargar del Release "Enoe-INEGI" (sin descomprimir)
 ```
 
-Los datos **no se suben a GitHub** (están en `.gitignore`). Cada persona los descarga de la fuente oficial.
+```bash
+unzip data/esru_emovi.zip -d data/raw/esru_emovi
+```
 
-## Pendientes
-
-- [ ] Confirmar qué edición de la ESRU-EMOVI usaremos y cómo se obtiene.
-- [ ] Descargar el cuestionario y el diccionario oficial.
-- [ ] Llenar la auditoría en `notebooks/01_data_audit.ipynb`.
-- [ ] Decidir la puerta de datos: 🟢 VERDE, 🟡 AMARILLO o 🔴 ROJO.
+Las tablas procesadas se generan en `data/processed/` al ejecutar los notebooks 01 y 02.

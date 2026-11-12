@@ -1,0 +1,22 @@
+dimension,,pct,n
+region,Norte,22.8,198.0
+region,Norte-occidente,39.6,242.0
+region,Centro-norte,31.4,243.0
+region,Centro,46.6,632.0
+region,Sur,64.1,1355.0
+localidad,Metrópoli,50.9,82.0
+localidad,Ciudad grande,45.6,156.0
+localidad,Ciudad mediana,40.5,228.0
+localidad,Ciudad chica,41.5,406.0
+localidad,"Pueblo (<2,500)",55.4,1802.0
+tono,Claro (H-K),49.4,417.0
+tono,Medio (F-G),49.8,1679.0
+tono,Oscuro (A-E),55.7,578.0
+lengua,Habla lengua indígena,68.9,476.0
+lengua,No habla lengua indígena,46.8,2198.0
+sexo,Hombre,47.8,1047.0
+sexo,Mujer,53.4,1627.0
+educ,Primaria o menos,56.2,1307.0
+educ,Secundaria,46.8,889.0
+educ,Preparatoria,43.9,352.0
+educ,Profesional,18.2,85.0
