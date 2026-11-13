@@ -70,3 +70,18 @@ Promediar reduce la varianza, y elegir variables al azar reduce $\rho$.
 - **Brier:** $\frac{1}{n} \sum_i (\hat{p}_i - y_i)^2$. Mide la calibración; menor es mejor.
 - **Exactitud balanceada:** promedio de la sensibilidad y la especificidad.
 - **Importancia por permutación:** caída del AUC en el conjunto de prueba al revolver al azar una variable. Mide cuánto *usa* el modelo esa variable, no su efecto causal.
+
+## 4. Qué significan las matemáticas en este proyecto
+
+| Elemento matemático | Decisión o resultado concreto |
+|---|---|
+| $e^{\beta_j}$ (razón de momios) | Hablar lengua indígena tiene $e^{\beta} \approx 1.9$: los momios de seguir en Q1 casi se duplican frente a quien no la habla, con región, origen, cohorte y sexo constantes |
+| Regularización L2 ($C = 0.5$) | Hay ≈50 columnas después del one-hot y 2,139 personas en entrenamiento; la penalización evita coeficientes inflados en categorías pequeñas |
+| Separación perfecta | Con 2 madres profesionistas en Q1, $\hat\beta \to \infty$ (RM = 6×10⁸). Por eso se agrupó "Secundaria o más" (D16) |
+| Errores agrupados por UPM | Las personas del mismo conglomerado se parecen; sin agruparlas, los intervalos serían demasiado estrechos |
+| Pesos $w_i$ en el GLM, no en ML | La inferencia descriptiva representa a la población; el entrenamiento predictivo se hace sin pesos para evitar que unas pocas personas con factores enormes dominen (D14) |
+| `min_samples_leaf = 20` en RF | Con n = 2,139, hojas más pequeñas memorizarían a personas concretas; la curva de aprendizaje muestra una brecha pequeña entre entrenamiento y validación |
+| Varianza del bosque $\rho\sigma^2 + \frac{1-\rho}{B}\sigma^2$ | Explica por qué RF es tan estable entre semillas (desv. 0.003) como la logística |
+| AUC ≈ 0.70 | Si se elige al azar a una persona que sigue en Q1 y a una que sale, el modelo ordena bien al 70% de los pares: hay señal, pero buena parte del destino no la explican las circunstancias observadas |
+| Brier 0.214 vs 0.25 | La calibración mejora frente al baseline, pero no es uniforme por tono de piel |
+| Primer componente PCA (21.6%) | Las cargas más altas son lavadora, refrigerador, baño, boiler y agua entubada: el índice captura sobre todo el acceso a servicios básicos y electrodomésticos |

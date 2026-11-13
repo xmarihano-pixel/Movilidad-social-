@@ -1,0 +1,5 @@
+Modelo,AUC CV,Desv. entre semillas/folds,Brecha máx. de calibración por tono (pts),Interpretabilidad (1-5),Simplicidad (1-5),Adecuación científica (1-5)
+Regresión logística,0.696,0.002,11.2,5,5,5
+Árbol de decisión,0.652,0.028,11.4,4,4,3
+Random forest,0.69,0.003,11.5,2,2,3
+Gradient boosting,0.672,0.004,10.5,1,2,3

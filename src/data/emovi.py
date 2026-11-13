@@ -92,6 +92,14 @@ def clean(raw: pd.DataFrame) -> pd.DataFrame:
     for c in DESTINO_SI_NO:
         out[f"d_{c}"] = _si_no(e[c])
     out["migro_entidad"] = (e["p19"] != e["entidad"]).astype(int)
+    # Empleo actual: formal = ocupado con seguridad social por su trabajo (IMSS, ISSSTE u otra).
+    out["empleo"] = np.select([e["ocup"] != 1, e["p68"].isin([1, 2, 3])],
+                              ["No ocupado", "Formal"], "Informal")
+    # Movilidad educativa respecto al padre o madre con más escolaridad (escala 1-4).
+    educ_padres = pd.concat([e["educp"], e["educm"]], axis=1).max(axis=1)
+    out["educ_padres_max"] = educ_padres
+    out["supero_educ_padres"] = np.where(e["educ"].notna() & educ_padres.notna(),
+                                         (e["educ"] > educ_padres).astype(float), np.nan)
     return out.copy()
 
 

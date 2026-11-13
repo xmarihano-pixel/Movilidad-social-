@@ -22,3 +22,9 @@ Cada decisión indica qué se decidió, por qué y qué consecuencias tiene. No 
 | D16 | 8 | En el logit explicativo, la escolaridad de los padres se agrupa en "Secundaria o más" | Dentro de Q1, solo 2 madres son profesionistas: causaban separación perfecta (RM = 6×10⁸) | Pérdida sustantiva mínima; documentado |
 | D17 | 10 | Se elimina el escenario "madre con preparatoria" | Solo 29 casos en Q1; el modelo agrupa esa categoría como poco frecuente | Se conserva el escenario "madre con secundaria" |
 | D18 | 11 | Se reporta el sesgo del modelo con el tono de piel oscuro | Subestima la persistencia en ≈11 puntos | El modelo no debe usarse para focalizar sin corrección |
+| D19 | 5 | Empleo formal = ocupado con seguridad social por su trabajo (IMSS, ISSSTE u otra; p68) | Es la definición de informalidad más cercana a la de INEGI que permite la EMOVI | Solo para la descripción y la mediación (riesgo de causalidad inversa) |
+| D20 | 10 | Los escenarios de la Fase 10 usan el **modelo de mediación** (origen + escolaridad + empleo), con IC de 100 remuestreos bootstrap | Los escenarios educativos y laborales del roadmap requieren esas variables | Se presentan como asociaciones, con lenguaje condicional |
+| D21 | 10 | Se **rechaza** el escenario de "choque adverso" | La EMOVI no mide choques; sería extrapolar (regla del roadmap) | Queda como trabajo futuro |
+| D22 | 9 | Perfiles con K-Means (k = 4) sobre 7 circunstancias de origen | Ilustrativo, no sustituye al target (roadmap, Fase 7.6) | No se usan como prueba |
+| D23 | 9 | SHAP sobre gradient boosting (modelo complejo) para contrastarlo con la logística | Convergencia de evidencia entre los dos tipos de modelo | Coinciden en las 3 variables principales |
+| D24 | 0 | **Todas las fases quedan como PROPUESTA** hasta la revisión humana | Regla de avance del roadmap: no se avanza solo porque una IA produjo una respuesta | El equipo debe marcar APROBADA / APROBADA CON CAMBIOS / REABRIR |

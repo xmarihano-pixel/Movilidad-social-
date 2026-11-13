@@ -1,0 +1,20 @@
+Variable,Grupo,% sin dato de escolaridad del padre
+q_origen,1,23.2
+q_origen,2,21.4
+q_origen,3,17.0
+q_origen,4,14.3
+q_origen,5,13.8
+region_14,Centro,18.6
+region_14,Centro-norte,17.3
+region_14,Norte,11.8
+region_14,Norte-occidente,12.7
+region_14,Sur,23.0
+localidad_14,Ciudad chica,17.4
+localidad_14,Ciudad grande,17.9
+localidad_14,Ciudad mediana,17.7
+localidad_14,Metrópoli,12.0
+localidad_14,"Pueblo (<2,500)",20.5
+cohorte,25-34,16.4
+cohorte,35-44,16.5
+cohorte,45-54,19.0
+cohorte,55-64,21.6

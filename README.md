@@ -34,8 +34,19 @@ flowchart LR
 | 🤖 **Modelo** | La regresión logística (AUC 0.70) iguala a random forest y gradient boosting, y se eligió por ser interpretable |
 | ⚠️ **Sesgo detectado** | El modelo subestima en ≈11 puntos la persistencia de las personas de tono de piel oscuro |
 | ✅ **Robusto** | Entre 47% y 51% con tres definiciones distintas de riqueza |
+| ➕ **Desventajas acumuladas** | Sur + pueblo + lengua indígena: 82% sigue en Q1 (vs 30% sin ninguna) |
+| 🔀 **El promedio engaña** | La brecha por tono de piel no existe en el Sur, pero es grande en el Norte |
 
-### Hipótesis
+### Hipótesis del roadmap (H001–H005)
+| # | Hipótesis | Estado |
+|---|---|---|
+| H001 | El origen se asocia con la posición adulta | ✅ Apoyada provisionalmente |
+| H002 | La educación modera la persistencia | ✅ Apoyada provisionalmente (mediadora) |
+| H003 | El efecto de la educación varía por región | ⚪ Sin evidencia (p ≈ 0.26) |
+| H004 | Movilidad educativa sin movilidad económica equivalente | ✅ Apoyada: 43% de quienes superaron a sus padres sigue en Q1 |
+| H005 | Las desventajas combinadas informan más | ✅ Se acumulan (30% → 82%), ⚪ pero sin sinergia |
+
+### Hipótesis del equipo
 | # | Hipótesis | Veredicto |
 |---|---|---|
 | H1 | Más de 40% de quienes nacen en Q1 siguen en Q1 | ✅ Se confirma (51%) |
@@ -58,7 +69,7 @@ flowchart LR
 | 07 | [Escenarios](notebooks/07_scenarios.ipynb) | 10 |
 | 08 | [Validación, sesgos y robustez](notebooks/08_final_validation.ipynb) | 11, 13 |
 
-Más documentos: [decisiones](docs/decisions/bitacora_decisiones.md) · [fundamentos matemáticos](docs/report/fundamentos_matematicos.md)
+Más documentos: [decisiones](docs/decisions/bitacora_decisiones.md) · [experimentos](docs/registro_experimentos.md) · [fundamentos matemáticos](docs/report/fundamentos_matematicos.md) · [auditoría final](docs/report/auditoria_final.md) · [referencias](docs/report/referencias.md)
 
 | Documento | Qué contiene |
 |---|---|
@@ -98,4 +109,4 @@ jupyter notebook                                    # ejecutar 01 → 08 en orde
 
 ## Estado
 
-✅ Fases 0 a 11 completas (análisis). Siguiente: **Fase 12 — cartel y reporte final**.
+Fases 0 a 11 hechas y en estado **PROPUESTA**: falta la revisión humana que pide el roadmap (ver la sección 6.1 de `roadmap.md`). Siguiente: **Fase 12 — cartel y reporte PDF**.

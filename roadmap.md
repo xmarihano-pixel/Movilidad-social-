@@ -1,7 +1,7 @@
 # ¿Qué tan pegajosa es la pobreza?
 ## Roadmap maestro para un proyecto de Machine Learning sobre movilidad social en México
 
-**Versión:** 1.0  
+**Versión:** 1.1  
 **Estado:** Documento vivo  
 **Propósito:** Servir como fuente permanente de contexto, control metodológico, bitácora y guía de prompts durante todo el proyecto, sin depender de que una IA conserve conversaciones anteriores.
 
@@ -969,6 +969,27 @@ No inventes evidencia para completar apartados ausentes.
 
 ---
 
+# 6.1 Estado de las fases (actualizado 2026-11-13)
+
+| Fase | Entregable principal | Dónde | Estado |
+|---|---|---|---|
+| 0 | Constitución, objetivos, preguntas, riesgos | `notebooks/00_context_and_scope.ipynb` | PROPUESTA (falta revisión humana) |
+| 1 | Hipótesis H001–H005 y H1–H5 | notebook 00 y sección 10 | PROPUESTA |
+| 2 | Marco conceptual y target | notebook 00, `docs/variables.md` | PROPUESTA |
+| 3 | Auditoría y puerta de datos 🟢 | `notebooks/01_data_audit.ipynb` | PROPUESTA |
+| 4 | Pipeline, partición, leakage | notebook 02, `src/` | PROPUESTA |
+| 5 | EDA, Simpson, faltantes por grupo | notebook 03 | PROPUESTA |
+| 6 | Baselines, métricas, calibración | notebook 04 | PROPUESTA |
+| 7 | Modelos y matriz de decisión | notebook 05 | PROPUESTA |
+| 8 | Matemáticas, semillas, curva de aprendizaje, stress test | `docs/report/fundamentos_matematicos.md`, notebook 05 | PROPUESTA |
+| 9 | Interpretación, SHAP, perfiles, convergencia | notebook 06 | PROPUESTA |
+| 10 | Escenarios con IC | notebook 07 | PROPUESTA |
+| 11 | Red team | notebook 08 | PROPUESTA |
+| 12 | Narrativa, reporte PDF y cartel | — | **PENDIENTE** |
+| 13 | Auditoría final y checklist | notebook 08 (checklist) | PARCIAL (falta el PDF y verificar referencias) |
+
+---
+
 # 7. Checkpoints mayores
 
 | Hito | Pregunta de control | Acción si falla |
@@ -1050,11 +1071,12 @@ Actualizar esta tabla durante todo el proyecto.
 
 | ID | Fecha | Fase | Decisión | Alternativas | Evidencia | Riesgo | Responsable | Estado |
 |---|---|---|---|---|---|---|---|---|
-| D001 | Pendiente | 0 | México como ámbito inicial | Regional o estatal | Pregunta original | Heterogeneidad nacional | Investigador | Provisional |
-| D002 | Pendiente | 0 | Movilidad social como tema central | Vulnerabilidad o desigualdad de oportunidades | Objetivo inicial | Datos insuficientes | Investigador | Provisional |
-| D003 | Pendiente | 2 | Definición del target | Quintiles, pobreza, índice, ingreso | Sin dataset | Sesgo de definición | Investigador | No decidido |
-| D004 | Pendiente | 6 | Modelo interpretable como baseline | Dummy solamente | Requisito de comparación | Subajuste | Equipo | Provisional |
-| D005 | Pendiente | 7 | Random Forest como candidato | SVM, boosting, otro | Posible no linealidad | Menor interpretabilidad | Equipo | Provisional |
+| D001 | 2026-11-10 | 0 | México como ámbito nacional | Regional o estatal | La EMOVI es representativa a nivel nacional y regional | Heterogeneidad nacional | Investigador | APROBADA |
+| D002 | 2026-11-12 | 0 | Movilidad intergeneracional relativa como tema central | Vulnerabilidad o desigualdad de oportunidades | La EMOVI tiene origen y destino | — | Investigador | PROPUESTA |
+| D003 | 2026-11-12 | 2 | Target: `sigue_q1` (Q1 de origen → Q1 de destino); secundario: 3 clases | Deciles, ingreso, pobreza | Responde directamente a la pregunta | Sesgo de definición (mitigado con stress test) | Equipo | PROPUESTA |
+| D004 | 2026-11-12 | 6 | Baselines: dummy (mayoritaria y estratificada) y logística con un predictor | Solo dummy | Requisito de comparación | — | Equipo | PROPUESTA |
+| D005 | 2026-11-12 | 7 | Random forest y gradient boosting como candidatos complejos | SVM, KNN | Posible no linealidad (no se encontró) | Menor interpretabilidad | Equipo | PROPUESTA |
+| D006–D023 | 2026-11-12/13 | 3–11 | Ver detalle en `docs/decisions/bitacora_decisiones.md` | — | — | — | Equipo | PROPUESTA |
 
 ### Estados permitidos
 
@@ -1066,11 +1088,13 @@ Actualizar esta tabla durante todo el proyecto.
 
 | ID | Hipótesis | Evidencia necesaria | Evidencia a favor | Evidencia en contra | Confusores | Estado | Conclusión permitida |
 |---|---|---|---|---|---|---|---|
-| H001 | El origen socioeconómico se asocia con la posición adulta | Variables comparables de origen y destino | Pendiente | Pendiente | Región, cohorte, educación | No evaluada | Ninguna todavía |
-| H002 | La educación puede moderar la persistencia | Educación propia, origen y destino | Pendiente | Pendiente | Calidad educativa, empleo | No evaluada | Ninguna todavía |
-| H003 | El efecto asociado con educación varía territorialmente | Región e interacciones | Pendiente | Pendiente | Mercado laboral local | No evaluada | Ninguna todavía |
-| H004 | Puede existir movilidad educativa sin movilidad económica equivalente | Educación parental/propia e ingreso/posición | Pendiente | Pendiente | Cohorte, ocupación | No evaluada | Ninguna todavía |
-| H005 | Las combinaciones de desventajas pueden ser más informativas que factores aislados | Interacciones o modelos no lineales | Pendiente | Pendiente | Tamaño de muestra | No evaluada | Ninguna todavía |
+| H001 | El origen socioeconómico se asocia con la posición adulta | Variables comparables de origen y destino | Correlación de índices de 0.62; 51% sigue en Q1 y 55% en Q5; robusto con 3 definiciones | — | Región, cohorte, educación | **APOYADA PROVISIONALMENTE** | "Existe una fuerte asociación"; no "el origen determina" |
+| H002 | La educación puede moderar la persistencia | Educación propia, origen y destino | 56% → 18% sigue en Q1 de primaria a profesional; AUC 0.70 → 0.74 al agregarla | Es mediadora y se mide al mismo tiempo que el destino | Calidad educativa, empleo, recursos no observados | **APOYADA PROVISIONALMENTE** | Asociación mediadora, no efecto causal |
+| H003 | El efecto asociado con la educación varía territorialmente | Región e interacciones | Diferencias descriptivas (0 a 30 pts por región) | Interacciones no significativas (Wald p ≈ 0.26) | Mercado laboral local, n por región | **SIN EVIDENCIA** | No se puede afirmar que varíe |
+| H004 | Puede existir movilidad educativa sin movilidad económica equivalente | Educación parental/propia e ingreso/posición | 40% superó a sus padres y, de ellos, 43% sigue en Q1 | — | Cohorte, ocupación, calidad educativa | **APOYADA PROVISIONALMENTE** | "Superar a los padres en escolaridad no garantiza salir de Q1" |
+| H005 | Las combinaciones de desventajas pueden ser más informativas que factores aislados | Interacciones o modelos no lineales | Acumulación: 30% (0 desventajas) → 82% (3) | Sin sinergia (Wald p ≈ 0.20); los árboles no superan a la logística | Tamaño de muestra | **APOYADA PROVISIONALMENTE (aditiva) / SIN EVIDENCIA (sinergia)** | "Las desventajas se suman" |
+
+Hipótesis específicas del equipo (H1–H5): ver `notebooks/00_context_and_scope.ipynb` y el README.
 
 ### Estados permitidos
 
@@ -1082,14 +1106,16 @@ Actualizar esta tabla durante todo el proyecto.
 
 | ID | Riesgo | Probabilidad | Impacto | Indicador | Mitigación | Estado |
 |---|---|---:|---:|---|---|---|
-| R001 | Dataset no mide origen y destino | Alta | Crítico | Ausencia de variables comparables | Reformular alcance | Abierto |
-| R002 | Confusión entre asociación y causalidad | Alta | Alto | Lenguaje causal en borradores | Revisión metodológica y red team | Abierto |
-| R003 | Leakage | Media | Crítico | Métricas anormalmente altas | Auditoría temporal y de variables | Abierto |
-| R004 | Clases desbalanceadas | Media | Alto | Clase dominante | Métricas balanceadas y weights | Abierto |
-| R005 | Falta de representatividad | Media | Alto | Diseño o cobertura limitada | Ponderadores y límites explícitos | Abierto |
-| R006 | Narrativa anterior a la evidencia | Alta | Alto | Solo se buscan confirmaciones | EDA adversarial y registro de hipótesis | Abierto |
-| R007 | Integración incorrecta de fuentes | Media | Crítico | Llaves no compatibles | Integración agregada o no integrar | Abierto |
-| R008 | Definición inestable del target | Alta | Alto | Resultados cambian por umbral | Análisis de sensibilidad | Abierto |
+| R001 | Dataset no mide origen y destino | Alta | Crítico | Ausencia de variables comparables | La EMOVI sí los tiene (puerta VERDE) | **Cerrado** |
+| R002 | Confusión entre asociación y causalidad | Alta | Alto | Lenguaje causal en borradores | Red team y regla de lenguaje en escenarios | Abierto (vigilar en el reporte y el cartel) |
+| R003 | Leakage | Media | Crítico | Métricas anormalmente altas | Sin variables de destino; pipeline con fit en entrenamiento | **Cerrado** |
+| R004 | Clases desbalanceadas | Media | Alto | Clase dominante | 52/48; class_weight sin efecto | **Cerrado** |
+| R005 | Falta de representatividad | Media | Alto | Diseño o cobertura limitada | Factores de expansión y errores por UPM; sesgo de supervivencia declarado | Mitigado |
+| R006 | Narrativa anterior a la evidencia | Alta | Alto | Solo se buscan confirmaciones | Hipótesis registradas antes; contradicciones conservadas (tono, madre, H003) | Mitigado |
+| R007 | Integración incorrecta de fuentes | Media | Crítico | Llaves no compatibles | Solo integración agregada por estado | **Cerrado** |
+| R008 | Definición inestable del target | Alta | Alto | Resultados cambian por umbral | 47–51% con 3 definiciones; mismo AUC por ingreso | **Cerrado** |
+| R009 | Modelo sesgado por tono de piel | Media | Alto | Brecha de calibración de ≈11 pts | No usar para focalizar; reportar | Abierto |
+| R010 | Efecto de cohorte por medición | Media | Medio | Bienes no comparables entre generaciones | Quintiles por cohorte; no afirmar tendencias | Abierto |
 
 ---
 
@@ -1097,7 +1123,10 @@ Actualizar esta tabla durante todo el proyecto.
 
 | Dataset | Fuente | Periodo | Unidad | Cobertura | Ponderador | Acceso | Uso previsto | Restricciones | Estado |
 |---|---|---|---|---|---|---|---|---|---|
-| Pendiente | Pendiente | Pendiente | Pendiente | Pendiente | Pendiente | Pendiente | Pendiente | Pendiente | No evaluado |
+| ESRU-EMOVI 2023 | CEEY | 2023 (origen retrospectivo a los 14 años) | Persona de 25-64 años (17,843) | Nacional y 5 regiones | `factor` (+ UPM, estrato) | Pública (CEEY) | **Principal** | Transversal, retrospectiva | Auditada ✅ |
+| Medición de pobreza 2022 | CONEVAL | 2022 | Persona | Nacional y estatal | `factor` | Pública | Contexto estatal | Sin llave con la EMOVI | Validada ✅ (36.3%) |
+| ENOE 2022 (T1–T4) | INEGI | 2022 | Persona ocupada | Nacional y estatal | `fac_tri` | Pública | Informalidad estatal | Sin llave con la EMOVI | Procesada ✅ |
+| ENIGH 2022 | INEGI | 2022 | Hogar y persona | Nacional y estatal | `factor` | Pública | Ya incluida en CONEVAL | Duplicaría la fuente | No procesada (D03) |
 
 ---
 
@@ -1105,7 +1134,20 @@ Actualizar esta tabla durante todo el proyecto.
 
 | Variable | Fuente | Tipo | Definición | Momento temporal | Rol | Sensible/proxy | Missing % | Transformación | Observaciones |
 |---|---|---|---|---|---|---|---:|---|---|
-| Pendiente | Pendiente | Pendiente | Pendiente | Pendiente | Pendiente | Pendiente | Pendiente | Pendiente | Pendiente |
+| `id` | EMOVI `index` | Texto | Folio | — | ID | No | 0 | — | — |
+| `factor` | EMOVI | Num. | Factor de expansión | — | PESO | No | 0 | — | 4 a 144,889 |
+| `sigue_q1` | Construida | Binaria | Q1 origen → Q1 destino | Origen → hoy | TARGET | No | — | Quintiles ponderados por cohorte | n = 2,674 |
+| `indice_origen` | p25–p32 | Num. | PCA de bienes a los 14 años | Origen | PREDICTORA | No | < 5 (ítems) | Media en NS | 21.6% de varianza |
+| `educ_madre` / `educ_padre` | educm / educp | Cat. | Escolaridad de los padres | Origen | PREDICTORA | No | 10 / 19 | Categoría "No sabe / ausente" | No aleatorio |
+| `region_14`, `localidad_14` | region_14, p21 | Cat. | Dónde creció | Origen | PREDICTORA | Proxy territorial | 0 | — | — |
+| `lengua_indigena` | p111 | Binaria | Habla lengua indígena | Dada | PREDICTORA | **Sensible** | 0 | — | — |
+| `tono_piel` | p112 | Cat. | Escala PERLA agrupada | Dada | PREDICTORA | **Sensible** | 0 | A-E / F-G / H-K | — |
+| `cohorte` | cohorte | Cat. | Grupo de edad | Dada | CONTROL | No | 0 | — | — |
+| `educ`, `empleo` | educ, ocup + p68 | Cat. | Escolaridad y formalidad actuales | Hoy | EXCLUIDA (solo mediación) | No | 2 / 0 | — | Riesgo de causalidad inversa |
+| `indice_destino` | p88–p99 | Num. | PCA de bienes actuales | Hoy | EXCLUIDA (construye el target) | No | < 5 | — | — |
+| `upm` | upm_muestra | Texto | Unidad primaria de muestreo | — | AGRUPACIÓN | No | 0 | — | Errores agrupados |
+
+Diccionario completo: `docs/variables.md`.
 
 Roles sugeridos: `ID / TARGET / PREDICTORA / CONTROL / PESO / AGRUPACIÓN / EXCLUIDA`.
 
@@ -1113,9 +1155,7 @@ Roles sugeridos: `ID / TARGET / PREDICTORA / CONTROL / PESO / AGRUPACIÓN / EXCL
 
 # 14. Registro de experimentos
 
-| Exp. | Fecha | Dataset | Target | Split | Preprocesamiento | Modelo | Parámetros | Métricas | Subgrupos | Artefacto | Decisión |
-|---|---|---|---|---|---|---|---|---|---|---|---|
-| E001 | Pendiente | Pendiente | Pendiente | Pendiente | Pendiente | Dummy | Pendiente | Pendiente | Pendiente | Pendiente | Pendiente |
+Ver el registro completo (E001–E013) en `docs/registro_experimentos.md`.
 
 Nunca reemplazar un experimento anterior. Crear una nueva fila.
 
@@ -1287,6 +1327,7 @@ Iniciar formalmente la **FASE 0** mediante el Prompt 0. Después de revisar y ap
 | Versión | Fecha | Cambios | Autor/Revisor |
 |---|---|---|---|
 | 1.0 | 2026-11-10 | Creación del roadmap maestro, prompts, bitácoras, escenarios de adaptación y protocolo multi-IA | Luis David / Microsoft Copilot |
+| 1.1 | 2026-11-13 | Se llenan las secciones 9–14 con los datos reales; se agrega el estado de las fases (6.1) | Luis David / Claude |
 
 ---
 
