@@ -5,6 +5,7 @@ import pandas as pd
 import statsmodels.api as sm
 import statsmodels.formula.api as smf
 from sklearn.cluster import KMeans
+from sklearn.metrics import silhouette_score
 from sklearn.linear_model import LogisticRegression
 from sklearn.pipeline import Pipeline
 from sklearn.preprocessing import StandardScaler
@@ -15,6 +16,38 @@ from src.models import train as T
 
 def wavg(x, w):
     return float(np.average(x, weights=w))
+
+
+def kish(w):
+    """Tamaño efectivo de muestra de Kish: cuántas observaciones 'equivalen' con estos pesos."""
+    w = np.asarray(w, dtype=float)
+    return float(w.sum() ** 2 / (w ** 2).sum())
+
+
+def cboot(d, col="sigue_q1", B=1000, seed=SEED):
+    """Tasa ponderada (%) con IC 95% por bootstrap de conglomerados (UPM), que respeta el
+    diseño muestral (corrección de auditoría C-03)."""
+    rng = np.random.default_rng(seed)
+    up = d["upm"].values
+    ids = pd.unique(up)
+    idx = {u: np.where(up == u)[0] for u in ids}
+    x, w = d[col].values.astype(float), d["factor"].values
+    est = []
+    for _ in range(B):
+        s = np.concatenate([idx[u] for u in rng.choice(ids, len(ids))])
+        est.append(np.average(x[s], weights=w[s]) * 100)
+    return {"%": np.average(x, weights=w) * 100, "IC 95% inf": np.percentile(est, 2.5),
+            "IC 95% sup": np.percentile(est, 97.5), "n": len(d), "n efectivo": kish(w)}
+
+
+def tabla_ic(d, col_grupo, col="sigue_q1", orden=None, B=1000):
+    rows = []
+    for k, g in d.groupby(col_grupo):
+        rows.append({"Grupo": k, **cboot(g, col, B)})
+    t = pd.DataFrame(rows).set_index("Grupo")
+    if orden:
+        t = t.reindex([o for o in orden if o in t.index])
+    return t.round(1)
 
 
 def _logit(f, d):
@@ -57,8 +90,7 @@ def h005_desventajas_acumuladas(df):
     q1["sur"] = (q1.region_14 == "Sur").astype(int)
     q1["pueblo"] = (q1.localidad_14 == "Pueblo (<2,500)").astype(int)
     q1["n_desventajas"] = q1.sur + q1.pueblo + q1.lengua_indigena
-    acum = q1.groupby("n_desventajas").apply(
-        lambda x: pd.Series({"% sigue Q1": wavg(x.sigue_q1, x.factor) * 100, "n": len(x)})).round(1)
+    acum = tabla_ic(q1, "n_desventajas").rename(columns={"%": "% sigue Q1"})
     m0 = _logit("sigue_q1 ~ sur + pueblo + lengua_indigena + indice_origen + C(cohorte)", q1)
     m1 = _logit("sigue_q1 ~ sur * pueblo * lengua_indigena + indice_origen + C(cohorte)", q1)
     inter = [k for k in m1.params.index if ":" in k]
@@ -78,16 +110,16 @@ def missing_by_group(df):
     return pd.DataFrame(rows), sig
 
 
-def simpson_check(df):
-    """¿La brecha por tono de piel se mantiene dentro de cada región? (posible efecto Simpson)"""
+def simpson_check(df, B=500):
+    """Tono de piel dentro de cada región, con IC por conglomerados. EXPLORATORIO: las celdas
+    tienen entre ~25 y ~200 personas (corrección de auditoría C-05)."""
     q1 = df[df.sigue_q1.notna()]
-    t = q1.groupby(["region_14", "tono_piel"]).apply(
-        lambda x: pd.Series({"pct": wavg(x.sigue_q1, x.factor) * 100, "n": len(x)})).unstack()
-    out = t["pct"].round(1)
-    out["n total"] = t["n"].sum(axis=1).astype(int)
-    total = q1.groupby("tono_piel").apply(lambda x: wavg(x.sigue_q1, x.factor) * 100).round(1)
-    out.loc["NACIONAL"] = list(total.reindex(out.columns[:-1])) + [len(q1)]
-    return out
+    rows = []
+    for (r, t), g in q1.groupby(["region_14", "tono_piel"]):
+        rows.append({"Región": r, "Tono": t, **cboot(g, B=B)})
+    for t, g in q1.groupby("tono_piel"):
+        rows.append({"Región": "NACIONAL", "Tono": t, **cboot(g, B=B)})
+    return pd.DataFrame(rows).round(1)
 
 
 def empleo_trayectoria(df):
@@ -132,6 +164,7 @@ def perfiles_kmeans(df, k=4):
         "madre_trabajaba": q1.madre_trabajaba, "hacinamiento_14": q1.hacinamiento_14.fillna(q1.hacinamiento_14.median()),
     })
     Z = StandardScaler().fit_transform(feats)
+    sil = {kk: round(silhouette_score(Z, KMeans(kk, n_init=20, random_state=SEED).fit_predict(Z)), 3) for kk in range(2, 7)}
     km = KMeans(k, n_init=20, random_state=SEED).fit(Z)
     q1["perfil"] = km.labels_
     prof = feats.assign(perfil=km.labels_).groupby("perfil").mean()
@@ -139,7 +172,7 @@ def perfiles_kmeans(df, k=4):
         prof[c] = prof[c] * 100
     prof["n"] = q1.groupby("perfil").size()
     prof["% sigue Q1"] = q1.groupby("perfil").apply(lambda x: wavg(x.sigue_q1, x.factor) * 100)
-    return prof.round(1).sort_values("% sigue Q1", ascending=False)
+    return prof.round(1).sort_values("% sigue Q1", ascending=False), sil
 
 
 MED_NUM = T.NUM + ["migro_entidad"]
@@ -181,12 +214,17 @@ def escenarios_roadmap(df, n_boot=100):
     Incertidumbre: se reestima el modelo en remuestreos bootstrap."""
     d = df[df.sigue_q1.notna() & df.educ.notna()].copy()
     rng = np.random.default_rng(SEED)
+    up = d["upm"].values
+    ids = pd.unique(up)
+    idx = {u: np.where(up == u)[0] for u in ids}
+    w = d["factor"].values
     res = {e: [] for e in ESCENARIOS}
     for b in range(n_boot + 1):
-        db = d if b == 0 else d.iloc[rng.integers(0, len(d), len(d))]
+        # Bootstrap por conglomerados (UPM) y promedios ponderados con el factor (C-10)
+        db = d if b == 0 else d.iloc[np.concatenate([idx[u] for u in rng.choice(ids, len(ids))])]
         m = _fit_med(db)
         for e in ESCENARIOS:
-            res[e].append(m.predict_proba(_apply(d, e)[MED_NUM + MED_CAT])[:, 1].mean() * 100)
+            res[e].append(np.average(m.predict_proba(_apply(d, e)[MED_NUM + MED_CAT])[:, 1], weights=w) * 100)
     rows = []
     base = np.array(res[ESCENARIOS[0]])
     for e in ESCENARIOS:
@@ -196,4 +234,10 @@ def escenarios_roadmap(df, n_boot=100):
                      "IC 95% inf": np.percentile(dif[1:], 2.5), "IC 95% sup": np.percentile(dif[1:], 97.5)})
     rows.append({"Escenario": "Choque adverso de empleo o ingreso", "% predicho que sigue en Q1": np.nan,
                  "Cambio vs continuidad (pts)": np.nan, "IC 95% inf": np.nan, "IC 95% sup": np.nan})
-    return pd.DataFrame(rows).round(1), len(d)
+    afectados = {"Mejora educativa (+1 nivel)": int((d.educ != "Profesional").sum()),
+                 "Mejora educativa sin mejora laboral (todos informales)": int((d.educ != "Profesional").sum()),
+                 "Mejora educativa con empleo formal": int((d.educ != "Profesional").sum()),
+                 "Reducción de brecha territorial (Sur con perfil del Centro)": int((d.region_14 == "Sur").sum())}
+    out = pd.DataFrame(rows)
+    out["Personas a las que cambia"] = out.Escenario.map(afectados)
+    return out.round(1), len(d)

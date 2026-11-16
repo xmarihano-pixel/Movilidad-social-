@@ -1,7 +1,7 @@
 # ¿Qué tan pegajosa es la pobreza?
 ## Roadmap maestro para un proyecto de Machine Learning sobre movilidad social en México
 
-**Versión:** 1.1  
+**Versión:** 1.2  
 **Estado:** Documento vivo  
 **Propósito:** Servir como fuente permanente de contexto, control metodológico, bitácora y guía de prompts durante todo el proyecto, sin depender de que una IA conserve conversaciones anteriores.
 
@@ -969,22 +969,24 @@ No inventes evidencia para completar apartados ausentes.
 
 ---
 
-# 6.1 Estado de las fases (actualizado 2026-11-13)
+# 6.1 Estado de las fases (actualizado 2026-11-16)
+
+Dictamen de la auditoría integral: **APROBADO CON CAMBIOS**, aprobado por el equipo el 2026-11-16. Correcciones en la rama `correcciones-auditoria`; versión original congelada en `congelado-auditoria-v1`.
 
 | Fase | Entregable principal | Dónde | Estado |
 |---|---|---|---|
-| 0 | Constitución, objetivos, preguntas, riesgos | `notebooks/00_context_and_scope.ipynb` | PROPUESTA (falta revisión humana) |
-| 1 | Hipótesis H001–H005 y H1–H5 | notebook 00 y sección 10 | PROPUESTA |
-| 2 | Marco conceptual y target | notebook 00, `docs/variables.md` | PROPUESTA |
-| 3 | Auditoría y puerta de datos 🟢 | `notebooks/01_data_audit.ipynb` | PROPUESTA |
-| 4 | Pipeline, partición, leakage | notebook 02, `src/` | PROPUESTA |
-| 5 | EDA, Simpson, faltantes por grupo | notebook 03 | PROPUESTA |
-| 6 | Baselines, métricas, calibración | notebook 04 | PROPUESTA |
-| 7 | Modelos y matriz de decisión | notebook 05 | PROPUESTA |
-| 8 | Matemáticas, semillas, curva de aprendizaje, stress test | `docs/report/fundamentos_matematicos.md`, notebook 05 | PROPUESTA |
-| 9 | Interpretación, SHAP, perfiles, convergencia | notebook 06 | PROPUESTA |
-| 10 | Escenarios con IC | notebook 07 | PROPUESTA |
-| 11 | Red team | notebook 08 | PROPUESTA |
+| 0 | Constitución, objetivos, preguntas, riesgos | `notebooks/00_context_and_scope.ipynb` | APROBADA CON CAMBIOS |
+| 1 | Hipótesis H001–H005 y H1–H5 | notebook 00 y sección 10 | APROBADA CON CAMBIOS |
+| 2 | Marco conceptual y target | notebook 00, `docs/variables.md` | APROBADA CON CAMBIOS |
+| 3 | Auditoría y puerta de datos 🟢 | `notebooks/01_data_audit.ipynb` | APROBADA CON CAMBIOS |
+| 4 | Pipeline, partición, leakage | notebook 02, `src/` | APROBADA CON CAMBIOS |
+| 5 | EDA, Simpson, faltantes por grupo | notebook 03 | APROBADA CON CAMBIOS |
+| 6 | Baselines, métricas, calibración | notebook 04 | APROBADA CON CAMBIOS |
+| 7 | Modelos y matriz de decisión | notebook 05 | APROBADA CON CAMBIOS |
+| 8 | Matemáticas, semillas, curva de aprendizaje, stress test | `docs/report/fundamentos_matematicos.md`, notebook 05 | APROBADA CON CAMBIOS |
+| 9 | Interpretación, SHAP, perfiles, convergencia | notebook 06 | APROBADA CON CAMBIOS |
+| 10 | Escenarios con IC | notebook 07 | APROBADA CON CAMBIOS |
+| 11 | Red team | notebook 08 | APROBADA CON CAMBIOS |
 | 12 | Narrativa, reporte PDF y cartel | — | **PENDIENTE** |
 | 13 | Auditoría final y checklist | notebook 08 (checklist) | PARCIAL (falta el PDF y verificar referencias) |
 
@@ -1072,11 +1074,12 @@ Actualizar esta tabla durante todo el proyecto.
 | ID | Fecha | Fase | Decisión | Alternativas | Evidencia | Riesgo | Responsable | Estado |
 |---|---|---|---|---|---|---|---|---|
 | D001 | 2026-11-10 | 0 | México como ámbito nacional | Regional o estatal | La EMOVI es representativa a nivel nacional y regional | Heterogeneidad nacional | Investigador | APROBADA |
-| D002 | 2026-11-12 | 0 | Movilidad intergeneracional relativa como tema central | Vulnerabilidad o desigualdad de oportunidades | La EMOVI tiene origen y destino | — | Investigador | PROPUESTA |
-| D003 | 2026-11-12 | 2 | Target: `sigue_q1` (Q1 de origen → Q1 de destino); secundario: 3 clases | Deciles, ingreso, pobreza | Responde directamente a la pregunta | Sesgo de definición (mitigado con stress test) | Equipo | PROPUESTA |
-| D004 | 2026-11-12 | 6 | Baselines: dummy (mayoritaria y estratificada) y logística con un predictor | Solo dummy | Requisito de comparación | — | Equipo | PROPUESTA |
-| D005 | 2026-11-12 | 7 | Random forest y gradient boosting como candidatos complejos | SVM, KNN | Posible no linealidad (no se encontró) | Menor interpretabilidad | Equipo | PROPUESTA |
-| D006–D023 | 2026-11-12/13 | 3–11 | Ver detalle en `docs/decisions/bitacora_decisiones.md` | — | — | — | Equipo | PROPUESTA |
+| D002 | 2026-11-12 | 0 | Movilidad intergeneracional relativa como tema central | Vulnerabilidad o desigualdad de oportunidades | La EMOVI tiene origen y destino | — | Investigador | APROBADA CON CAMBIOS |
+| D003 | 2026-11-12 | 2 | Target: `sigue_q1` (Q1 de origen → Q1 de destino); secundario: 3 clases | Deciles, ingreso, pobreza | Responde directamente a la pregunta | Sesgo de definición (mitigado con stress test) | Equipo | APROBADA CON CAMBIOS |
+| D004 | 2026-11-12 | 6 | Baselines: dummy (mayoritaria y estratificada) y logística con un predictor | Solo dummy | Requisito de comparación | — | Equipo | APROBADA CON CAMBIOS |
+| D005 | 2026-11-12 | 7 | Random forest y gradient boosting como candidatos complejos | SVM, KNN | Posible no linealidad (no se encontró) | Menor interpretabilidad | Equipo | APROBADA CON CAMBIOS |
+| D006–D024 | 2026-11-12/13 | 3–11 | Ver detalle en `docs/decisions/bitacora_decisiones.md` | — | — | — | Equipo | APROBADA CON CAMBIOS |
+| D025–D035 | 2026-11-16 | 2–13 | Correcciones de la auditoría integral (`docs/audit/`) | — | Auditoría | — | Equipo | APROBADA |
 
 ### Estados permitidos
 
@@ -1114,7 +1117,9 @@ Hipótesis específicas del equipo (H1–H5): ver `notebooks/00_context_and_scop
 | R006 | Narrativa anterior a la evidencia | Alta | Alto | Solo se buscan confirmaciones | Hipótesis registradas antes; contradicciones conservadas (tono, madre, H003) | Mitigado |
 | R007 | Integración incorrecta de fuentes | Media | Crítico | Llaves no compatibles | Solo integración agregada por estado | **Cerrado** |
 | R008 | Definición inestable del target | Alta | Alto | Resultados cambian por umbral | 47–51% con 3 definiciones; mismo AUC por ingreso | **Cerrado** |
-| R009 | Modelo sesgado por tono de piel | Media | Alto | Brecha de calibración de ≈11 pts | No usar para focalizar; reportar | Abierto |
+| R009 | Modelo sesgado por tono de piel | Media | Alto | Brecha de calibración de ≈11 pts | **Retirado por la auditoría:** era un artefacto de una partición (n = 114); fuera de muestra la brecha ≈ 0 | **Cerrado** |
+| R011 | Incertidumbre subestimada (diseño muestral) | Alta | Alto | n efectivo de Q1 ≈ 815 | IC por conglomerados (UPM) en todas las tasas | **Cerrado** |
+| R012 | Inferencias por estado | Alta | Alto | n efectivo ≈ 31 por estado | Etiquetado como exploratorio | Mitigado |
 | R010 | Efecto de cohorte por medición | Media | Medio | Bienes no comparables entre generaciones | Quintiles por cohorte; no afirmar tendencias | Abierto |
 
 ---
@@ -1328,6 +1333,7 @@ Iniciar formalmente la **FASE 0** mediante el Prompt 0. Después de revisar y ap
 |---|---|---|---|
 | 1.0 | 2026-11-10 | Creación del roadmap maestro, prompts, bitácoras, escenarios de adaptación y protocolo multi-IA | Luis David / Microsoft Copilot |
 | 1.1 | 2026-11-13 | Se llenan las secciones 9–14 con los datos reales; se agrega el estado de las fases (6.1) | Luis David / Claude |
+| 1.2 | 2026-11-16 | Auditoría integral aprobada; fases 0–11 APROBADAS CON CAMBIOS; riesgos R009 (cerrado), R011 y R012 | Equipo / Claude |
 
 ---
 

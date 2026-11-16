@@ -6,7 +6,7 @@
 
 | Variable | Qué mide | Cómo se construye |
 |---|---|---|
-| `sigue_q1` ⭐ | Nació en el 20% más pobre **y** sigue en el 20% más pobre | `q_origen == 1` y `q_destino == 1` (sí = 1, no = 0) |
+| `sigue_q1` ⭐ | Creció en el 20% de hogares con menos bienes **y** sigue en ese 20% (posición relativa, no pobreza oficial) | `q_origen == 1` y `q_destino == 1` (sí = 1, no = 0) |
 | `movilidad` | Subió, se quedó o bajó | Ascenso / Permanencia / Descenso según `q_destino − q_origen` |
 | `q_origen` / `q_destino` | Quintil de riqueza (1 = 20% más pobre) | Quintiles ponderados del índice, dentro de cada cohorte |
 | `indice_origen` / `indice_destino` | Riqueza del hogar | Primer componente principal de los bienes del hogar |

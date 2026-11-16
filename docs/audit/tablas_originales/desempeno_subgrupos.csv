@@ -1,0 +1,17 @@
+Variable,Grupo,n,Tasa real sigue Q1,Tasa predicha,AUC,Brecha (real - predicha)
+mujer,Hombre,212,0.486,0.495,0.705,-0.009
+mujer,Mujer,323,0.539,0.522,0.722,0.017
+tono_piel,Claro (H-K),92,0.37,0.469,0.761,-0.099
+tono_piel,Medio (F-G),329,0.526,0.527,0.728,-0.001
+tono_piel,Oscuro (A-E),114,0.614,0.502,0.65,0.112
+region_14,Centro,123,0.48,0.458,0.585,0.022
+region_14,Centro-norte,53,0.34,0.312,0.483,0.028
+region_14,Norte,33,0.273,0.379,0.634,-0.106
+region_14,Norte-occidente,64,0.359,0.316,0.749,0.043
+region_14,Sur,261,0.644,0.641,0.713,0.003
+lengua_indigena,No habla lengua indígena,430,0.477,0.466,0.695,0.011
+lengua_indigena,Habla lengua indígena,105,0.686,0.696,0.699,-0.01
+localidad_14,Ciudad chica,97,0.423,0.47,0.72,-0.047
+localidad_14,Ciudad grande,32,0.312,0.426,0.727,-0.114
+localidad_14,Ciudad mediana,36,0.528,0.436,0.799,0.092
+localidad_14,"Pueblo (<2,500)",356,0.57,0.545,0.695,0.025

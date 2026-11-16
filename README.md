@@ -23,19 +23,22 @@ flowchart LR
 
 ![Matriz de transición](reports/figures/01_matriz_transicion.png)
 
+> **Aclaración de lenguaje:** "pobreza" aparece solo en el título. Lo que se mide es la **posición relativa del hogar en la distribución de bienes y servicios** (Q1 = el 20% de hogares con menos bienes de cada generación), no la pobreza oficial de CONEVAL. Las tasas son ponderadas, con IC 95% por conglomerados.
+
 | Hallazgo | Dato |
 |---|---|
-| 🔒 **La pobreza es pegajosa** | **51%** de quienes crecen en el 20% más pobre siguen ahí de adultos (IC 95%: 48–55%). Solo **2%** llega al 20% más rico |
-| 🔒 **La riqueza también** | 55% de quienes crecen en el 20% más rico siguen ahí |
-| 🧭 **La región pesa más que todo** | Seguir en el 20% más pobre: **64%** si creció en el Sur vs **23%** en el Norte |
-| 🗣️ **Lengua indígena** | **69%** vs 47%. Casi el doble de momios, aun comparando personas de la misma región y con un origen similar |
-| 🎓 **La educación propia es la salida** | 56% sigue en Q1 con primaria o menos vs **18%** con estudios profesionales (mediadora, no es origen) |
-| 🗺️ **Contexto estatal** | Los estados con más pobreza en 2022 (CONEVAL) tienen pobreza más pegajosa (r = 0.56) |
-| 🤖 **Modelo** | La regresión logística (AUC 0.70) iguala a random forest y gradient boosting, y se eligió por ser interpretable |
-| ⚠️ **Sesgo detectado** | El modelo subestima en ≈11 puntos la persistencia de las personas de tono de piel oscuro |
+| 🔒 **La desventaja es pegajosa** | **51%** de quienes crecen en el 20% de hogares con menos bienes siguen ahí de adultos (IC 95%: 46–55%). Solo **2%** llega al 20% con más bienes |
+| 🔒 **La ventaja también** | 55% de quienes crecen en el 20% con más bienes siguen ahí (IC 52–58%) |
+| 🧭 **La región pesa más que todo** | Siguen en el 20% con menos bienes: **64%** de quienes crecieron en el Sur (IC 59–69) vs **23%** en el Norte (IC 12–37) |
+| 🗣️ **Lengua indígena** | **69%** (IC 60–77) vs 47% (IC 42–52). Casi el doble de momios, aun con la misma región y un origen similar (lengua que se habla hoy) |
+| 🎓 **La escolaridad propia es la característica más asociada con haber salido** | 56% sigue con primaria o menos vs **18%** con estudios profesionales (IC 8–30). Es mediadora, no causa demostrada |
+| ➕ **Desventajas acumuladas** | Sur + pueblo + lengua indígena: **82%** sigue (IC 74–88) vs **30%** sin ninguna (IC 22–38) |
+| 🤖 **Modelo** | La regresión logística (AUC ≈ 0.70) iguala a random forest y gradient boosting, es la más interpretable y de las más rápidas. Está calibrada por sexo, lengua, región y tono de piel (fuera de muestra) |
 | ✅ **Robusto** | Entre 47% y 51% con tres definiciones distintas de riqueza |
-| ➕ **Desventajas acumuladas** | Sur + pueblo + lengua indígena: 82% sigue en Q1 (vs 30% sin ninguna) |
-| 🔀 **El promedio engaña** | La brecha por tono de piel no existe en el Sur, pero es grande en el Norte |
+| 🗺️ **Contexto estatal (exploratorio)** | Los estados con más pobreza en 2022 (CONEVAL) tienden a mostrar mayor persistencia (r ≈ 0.56), pero la EMOVI no es representativa por estado (n efectivo ≈ 31 por estado) |
+| ⚪ **Tono de piel** | Sin brecha significativa con estos datos (IC traslapados); si varía por región es una pregunta abierta |
+
+> 🔎 **Auditoría integral (2026-11-16):** dictamen **APROBADO CON CAMBIOS**. Se **retiró** un hallazgo anterior ("el modelo subestima ≈11 pts la persistencia del tono oscuro"): venía de una sola partición de prueba de 114 personas. Detalle en [`docs/audit/`](docs/audit/Auditoria_Integral_y_Plan_de_Accion_Movilidad_Social_Mexico.md) y en la [trazabilidad de cambios](docs/audit/07_trazabilidad_cambios.md).
 
 ### Hipótesis del roadmap (H001–H005)
 | # | Hipótesis | Estado |
@@ -49,10 +52,10 @@ flowchart LR
 ### Hipótesis del equipo
 | # | Hipótesis | Veredicto |
 |---|---|---|
-| H1 | Más de 40% de quienes nacen en Q1 siguen en Q1 | ✅ Se confirma (51%) |
+| H1 | Más de 40% de quienes nacen en Q1 siguen en Q1 | ✅ Se confirma (51%, IC 46–55) |
 | H2 | Crecer en el Sur o en zona rural aumenta la persistencia | ✅ Sur · ⚠️ Rural solo en la descripción |
 | H3 | La escolaridad de la madre reduce la persistencia | ❌ No se observa dentro de Q1 (casi no hay variación) |
-| H4 | Lengua indígena y tono oscuro aumentan la persistencia | ✅ Lengua · ⚠️ Tono: no significativo al controlar región y lengua |
+| H4 | Lengua indígena y tono oscuro aumentan la persistencia | ✅ Lengua · ⚪ Tono: sin evidencia significativa |
 | H5 | Los modelos complejos no superan a la logística | ✅ Se confirma |
 
 ## Notebooks (ejecutados, se pueden ver directo en GitHub)
@@ -69,7 +72,7 @@ flowchart LR
 | 07 | [Escenarios](notebooks/07_scenarios.ipynb) | 10 |
 | 08 | [Validación, sesgos y robustez](notebooks/08_final_validation.ipynb) | 11, 13 |
 
-Más documentos: [decisiones](docs/decisions/bitacora_decisiones.md) · [experimentos](docs/registro_experimentos.md) · [fundamentos matemáticos](docs/report/fundamentos_matematicos.md) · [auditoría final](docs/report/auditoria_final.md) · [referencias](docs/report/referencias.md)
+Más documentos: [auditoría](docs/audit/Auditoria_Integral_y_Plan_de_Accion_Movilidad_Social_Mexico.md) · [rúbricas](docs/rubric/) · [decisiones](docs/decisions/bitacora_decisiones.md) · [experimentos](docs/registro_experimentos.md) · [fundamentos matemáticos](docs/report/fundamentos_matematicos.md) · [auditoría final](docs/report/auditoria_final.md) · [referencias](docs/report/referencias.md)
 
 | Documento | Qué contiene |
 |---|---|
@@ -109,4 +112,4 @@ jupyter notebook                                    # ejecutar 01 → 08 en orde
 
 ## Estado
 
-Fases 0 a 11 hechas y en estado **PROPUESTA**: falta la revisión humana que pide el roadmap (ver la sección 6.1 de `roadmap.md`). Siguiente: **Fase 12 — cartel y reporte PDF**.
+Fases 0 a 11: **APROBADAS CON CAMBIOS** tras la auditoría integral y la aplicación de las correcciones (sección 6.1 de `roadmap.md`). Siguiente: **Fase 12 — cartel (90×120 cm) y reporte PDF**.

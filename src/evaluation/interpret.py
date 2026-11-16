@@ -7,17 +7,20 @@ from sklearn.inspection import permutation_importance
 from src.config import SEED
 
 
-def logit_explicativo(d, extra=""):
+def logit_explicativo(d, extra="", ponderar=True):
     """Logit ponderado con errores agrupados por UPM (diseño muestral). Resultados en razones de momios."""
     d = d.dropna(subset=["hermanos", "indice_origen", "sigue_q1"]).copy()
-    d["w"] = d["factor"] / d["factor"].mean()
+    d["w"] = d["factor"] / d["factor"].mean() if ponderar else 1.0
     # En Q1 de origen casi nadie tiene padres con preparatoria o más (madre: 31 casos;
     # con 2 casos "Profesional" el modelo se separa). Se agrupa "Secundaria o más" sólo aquí.
     for c in ["educ_madre", "educ_padre"]:
         d[c] = d[c].replace({"Secundaria": "Secundaria o más", "Preparatoria": "Secundaria o más",
                              "Profesional": "Secundaria o más"})
+    # C-07: la referencia "Metrópoli" tenía 82 casos en Q1 y producía razones de momios inestables.
+    # Se agrupa en Pueblo (<2,500) frente a Ciudad (cualquier tamaño, referencia).
+    d["localidad_14"] = np.where(d["localidad_14"] == "Pueblo (<2,500)", "Pueblo (<2,500)", "Ciudad")
     f = ("sigue_q1 ~ indice_origen + C(educ_madre, Treatment('Primaria o menos'))"
-         " + C(educ_padre, Treatment('Primaria o menos')) + C(localidad_14, Treatment('Metrópoli'))"
+         " + C(educ_padre, Treatment('Primaria o menos')) + C(localidad_14, Treatment('Ciudad'))"
          " + C(region_14, Treatment('Centro')) + C(tono_piel, Treatment('Medio (F-G)'))"
          " + mujer + lengua_indigena + hermanos + C(cohorte)" + extra)
     import statsmodels.api as sm
@@ -31,6 +34,16 @@ def logit_explicativo(d, extra=""):
     out.index = (out.index.str.replace(r"C\((\w+), Treatment\('[^']+'\)\)\[T\.", r"\1 = ", regex=True)
                  .str.replace(r"C\((\w+)\)\[T\.", r"\1 = ", regex=True).str.replace("]", ""))
     return out.drop(index="Intercept"), m
+
+
+def sensibilidad_pesos(d):
+    """Compara las razones de momios con y sin factores de expansión (auditoría, sección 8.1)."""
+    a, _ = logit_explicativo(d, ponderar=True)
+    b, _ = logit_explicativo(d, ponderar=False)
+    out = pd.DataFrame({"RM ponderada": a["Razón de momios"], "p (ponderada)": a["p-valor"],
+                        "RM sin pesos": b["Razón de momios"], "p (sin pesos)": b["p-valor"]})
+    out["Mismo signo"] = np.sign(np.log(out["RM ponderada"])) == np.sign(np.log(out["RM sin pesos"]))
+    return out
 
 
 def importance(model, te, num, cat, target="sigue_q1"):

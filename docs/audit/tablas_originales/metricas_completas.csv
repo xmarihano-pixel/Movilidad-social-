@@ -1,0 +1,8 @@
+Modelo,AUC,PR-AUC,Log loss,Precisión (sigue Q1),Recall (sigue Q1),Precisión (sale),Recall (sale),Macro F1
+Base: siempre la clase mayoritaria,0.5,0.518,0.693,0.518,1.0,0.0,0.0,0.341
+Base: sólo índice de origen,0.556,0.58,0.688,0.539,0.794,0.551,0.271,0.503
+Regresión logística,0.716,0.72,0.618,0.681,0.686,0.66,0.655,0.671
+Árbol de decisión,0.681,0.653,0.645,0.663,0.682,0.648,0.628,0.655
+Random forest,0.722,0.725,0.629,0.653,0.708,0.655,0.597,0.652
+Gradient boosting,0.721,0.72,0.615,0.671,0.671,0.647,0.647,0.659
+Base: estratificada,0.501,0.518,6.895,0.519,0.495,0.483,0.508,0.501

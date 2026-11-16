@@ -28,3 +28,21 @@ Cada decisión indica qué se decidió, por qué y qué consecuencias tiene. No 
 | D22 | 9 | Perfiles con K-Means (k = 4) sobre 7 circunstancias de origen | Ilustrativo, no sustituye al target (roadmap, Fase 7.6) | No se usan como prueba |
 | D23 | 9 | SHAP sobre gradient boosting (modelo complejo) para contrastarlo con la logística | Convergencia de evidencia entre los dos tipos de modelo | Coinciden en las 3 variables principales |
 | D24 | 0 | **Todas las fases quedan como PROPUESTA** hasta la revisión humana | Regla de avance del roadmap: no se avanza solo porque una IA produjo una respuesta | El equipo debe marcar APROBADA / APROBADA CON CAMBIOS / REABRIR |
+
+### Decisiones posteriores a la auditoría integral (aprobadas por el equipo el 2026-11-16)
+
+Dictamen: **APROBADO CON CAMBIOS** (`docs/audit/`). Versión original congelada en la rama `congelado-auditoria-v1` (commit `10533d7`).
+
+| # | Fase | Decisión | Por qué | Consecuencia |
+|---|---|---|---|---|
+| D25 | 11 | **Se retira** el hallazgo "el modelo subestima ≈11 pts la persistencia del tono oscuro" (D18 queda como historial, no se borra) | Venía de una sola partición de prueba (n = 114). Fuera de muestra, con las 2,674 personas, la brecha es ≈0 (IC −4 a +4) — auditoría H-01 | El desempeño por subgrupo se evalúa con predicciones fuera de muestra (CV) e IC |
+| D26 | 5, 11 | Todas las tasas ponderadas llevan **IC 95% por bootstrap de conglomerados (UPM)** | El bootstrap simple ignoraba el diseño; n efectivo de Q1 ≈ 815 — H-02/H-03 | El IC titular pasa de 48–55% a 46–55% |
+| D27 | 2 | **Lenguaje:** "20% de hogares con menos bienes" en los textos técnicos; "pobreza" solo en el título, con aclaración | El target mide posición relativa en bienes, no pobreza oficial — H-07 | Sin cambio en los resultados |
+| D28 | 4, 7 | Se **conservan** en el modelo la autoadscripción y el tono autopercibido | Decisión del equipo: no es necesario modificarlos; el AUC sería prácticamente igual | Se interpretan con la restricción de que se miden hoy (H-08) |
+| D29 | 5 | El análisis **por estado se conserva** (también en el cartel, con poco espacio), etiquetado como **exploratorio** y con el n efectivo visible | Decisión del equipo; la EMOVI no es representativa por estado — H-04 | No se hacen afirmaciones individuales ni rankings de estados |
+| D30 | 5 | El "efecto Simpson" tono × región se **reformula** como pregunta abierta | IC traslapados; celdas de 24–50 personas — H-05 | Sale de los hallazgos |
+| D31 | 9 | En el logit, la referencia de localidad pasa a **Ciudad** (Pueblo vs Ciudad) | "Metrópoli" tenía 82 casos y RM inestables — H-06 | Se agrega una tabla de sensibilidad con y sin pesos |
+| D32 | 10 | Escenarios con promedios **ponderados** e IC por conglomerados; se reporta a cuántas personas cambia cada escenario | H-10 | Cifras ligeramente distintas |
+| D33 | 7 | Se agrega el **tiempo de entrenamiento** a la comparación de modelos | Lo pide la rúbrica del reporte (`docs/rubric/Reporte_Final.pdf`, sección 6) | — |
+| D34 | 13 | `requirements.txt` con versiones fijas y pruebas mínimas en `tests/` | Reproducibilidad — H-14/H-17 | — |
+| D35 | 13 | La verificación de referencias y de la cifra del CEEY **se pospone**; se conservan los enlaces | Decisión del equipo | Pendiente antes de la entrega final |

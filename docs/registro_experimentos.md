@@ -6,10 +6,10 @@ Dataset: `data/processed/emovi_movilidad.parquet` (ESRU-EMOVI 2023). Target: `si
 |---|---|---|---|---|---|---|---|---|---|
 | E001 | 2026-11-12 | sigue_q1 | Dummy (mayoritaria) | prior | 0.500 | 0.500 | — | `comparacion_modelos.csv` | Baseline |
 | E002 | 2026-11-12 | sigue_q1 | Logística (solo índice de origen) | default | 0.531 | 0.556 | — | idem | Baseline |
-| E003 | 2026-11-12 | sigue_q1 | Regresión logística | C = 0.5, L2 | 0.696 | 0.716 | Brecha por tono ≈ 11 pts | idem | **Elegido** |
+| E003 | 2026-11-12 | sigue_q1 | Regresión logística | C = 0.5, L2 | 0.696 | 0.716 | ~~Brecha por tono ≈ 11 pts~~ (retirado: ver E014) | idem | **Elegido** |
 | E004 | 2026-11-12 | sigue_q1 | Árbol de decisión | max_depth = 4, min_leaf = 50 | 0.652 | 0.681 | — | idem | Descartado (inestable) |
-| E005 | 2026-11-12 | sigue_q1 | Random forest | 400 árboles, min_leaf = 20, sqrt | 0.690 | 0.722 | Brecha por tono ≈ 11 pts | idem | No supera a E003 |
-| E006 | 2026-11-12 | sigue_q1 | Gradient boosting | depth 3, lr 0.05, 300 iter, l2 = 1 | 0.672 | 0.721 | Brecha por tono ≈ 10 pts | idem | No supera a E003; se usa para SHAP |
+| E005 | 2026-11-12 | sigue_q1 | Random forest | 400 árboles, min_leaf = 20, sqrt | 0.690 | 0.722 | ~~Brecha por tono ≈ 11 pts~~ (retirado: ver E014) | idem | No supera a E003 |
+| E006 | 2026-11-12 | sigue_q1 | Gradient boosting | depth 3, lr 0.05, 300 iter, l2 = 1 | 0.672 | 0.721 | ~~Brecha por tono ≈ 10 pts~~ (retirado: ver E014) | idem | No supera a E003; se usa para SHAP |
 | E007 | 2026-11-12 | sigue_q1 | E003–E006 + escolaridad propia y migración (mediación) | igual | 0.737 (logística) | 0.737 | — | `comparacion_modelos_mediacion.csv` | Solo interpretativo |
 | E008 | 2026-11-12 | movilidad (3 clases) | Logística multinomial + quintil de origen | default | — | ver notebook 05 | — | notebook 05 | Secundario |
 | E009 | 2026-11-13 | sigue_q1 | Dummy estratificado | stratified | — | 0.501 | — | `metricas_completas.csv` | Baseline extra (Fase 6) |
@@ -17,3 +17,6 @@ Dataset: `data/processed/emovi_movilidad.parquet` (ESRU-EMOVI 2023). Target: `si
 | E011 | 2026-11-13 | sigue_q1 | Logística, RF y GB con 10 semillas | igual | 0.701 / 0.697 / 0.689 | — | — | `sensibilidad_semillas.csv` | Confirma E003 |
 | E012 | 2026-11-13 | sigue_q1 por **ingreso** | Regresión logística | C = 0.5 | ≈ 0.70 | — | — | notebook 05 | Stress test superado |
 | E013 | 2026-11-13 | sigue_q1 | Logística de mediación (+ escolaridad y empleo), 100 bootstrap | C = 0.5 | — | — | — | `escenarios_roadmap.csv` | Escenarios de la Fase 10 |
+| E014 | 2026-11-16 | sigue_q1 | Logística: desempeño por subgrupo **fuera de muestra** (CV de 5 particiones, 2,674 personas) | C = 0.5 | — | — | Brecha por tono ≈ 0 (IC incluye 0) | `desempeno_subgrupos.csv` | **Reemplaza** la columna de subgrupos de E003–E006 (auditoría H-01) |
+| E015 | 2026-11-16 | sigue_q1 | Logit explicativo con referencia de localidad = Ciudad, con y sin pesos | GLM ponderado, errores por UPM | — | — | — | `razones_momios*.csv` | Auditoría H-06 |
+| E016 | 2026-11-16 | sigue_q1 | Escenarios del roadmap ponderados, bootstrap por UPM (100) | C = 0.5 | — | — | — | `escenarios_roadmap.csv` | Reemplaza E013 (auditoría H-10) |

@@ -1,0 +1,4 @@
+tipo,n,% Sur,% pueblo,% lengua indígena,% tono oscuro,% prepa o más (no usado por el modelo)
+Acierto,359,51.5,66.3,21.7,20.3,16.2
+Falso negativo (sigue y se predijo que sale),87,16.1,64.4,1.1,29.9,17.2
+Falso positivo (sale y se predijo que sigue),89,69.7,69.7,29.2,16.9,18.0

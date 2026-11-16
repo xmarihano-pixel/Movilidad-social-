@@ -1,14 +1,16 @@
-numpy
-pandas
-scikit-learn
-matplotlib
-seaborn
-statsmodels
-shap
-jupyter
-pyarrow
-pyreadstat
-openpyxl
-nbformat
-nbconvert
-pytest
+# Versiones con las que se verificó la reproducción (Python 3.13)
+numpy==2.5.3
+pandas==3.0.5
+scikit-learn==1.9.1
+matplotlib==3.11.2
+seaborn==0.13.2
+statsmodels==0.15.0
+shap==0.54.1
+jupyter  # cualquier versión reciente
+pyarrow==26.0.1
+pyreadstat==1.3.7
+openpyxl==3.1.5
+nbformat==5.11.1
+nbconvert==7.17.2
+pytest==9.2.0
+pypdf==6.17.0

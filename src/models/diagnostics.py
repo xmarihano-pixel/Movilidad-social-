@@ -103,17 +103,19 @@ def decision_matrix(tabla, seeds_summary, subgroups: dict):
              "Random forest": (2, 2, 3), "Gradient boosting": (1, 2, 3)}
     t = tabla.set_index("Modelo")
     rows = []
+    tiempo = t["Tiempo de entrenamiento (s)"] if "Tiempo de entrenamiento (s)" in t else {}
     for n, (interp, compl, ciencia) in fijos.items():
         auc = t.loc[n, "AUC CV (media)"]
         std = seeds_summary.loc[n, "std"] if n in seeds_summary.index else t.loc[n, "AUC CV (desv.)"]
         gap = subgroups.get(n, np.nan)
         rows.append({"Modelo": n, "AUC CV": auc, "Desv. entre semillas/folds": std,
-                     "Brecha máx. de calibración por tono (pts)": gap,
-                     "Interpretabilidad (1-5)": interp, "Simplicidad (1-5)": compl, "Adecuación científica (1-5)": ciencia})
+                     "Brecha máx. por tono, fuera de muestra (pts)": gap,
+                     "Tiempo de entrenamiento (s)": tiempo.get(n, np.nan), "Interpretabilidad (1-5)": interp, "Simplicidad (1-5)": compl, "Adecuación científica (1-5)": ciencia})
     return pd.DataFrame(rows).round(3)
 
 
-def tone_gap(model, te, num, cat):
-    p = model.predict_proba(te[num + cat])[:, 1]
-    g = te.assign(_p=p).groupby("tono_piel").apply(lambda x: abs(x.sigue_q1.mean() - x._p.mean()))
+def tone_gap(model, df, num, cat):
+    """Brecha máxima |real - predicha| por tono de piel, con predicciones fuera de muestra (C-01)."""
+    d = T.oof_predictions(model, df, num, cat)
+    g = d.groupby("tono_piel").apply(lambda x: abs(x.sigue_q1.mean() - x._p.mean()))
     return round(g.max() * 100, 1)

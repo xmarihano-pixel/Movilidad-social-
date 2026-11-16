@@ -1,6 +1,6 @@
 # Auditoría final contra la rúbrica (Fase 13)
 
-Rúbrica: "Contenido esperado del reporte Proyecto Integrador" (según la sección 20 del roadmap).
+Rúbricas: `docs/rubric/Reporte_Final.pdf` (reporte) y `docs/rubric/Rubrica-Posters-2025B.pdf` (póster). La auditoría integral posterior está en `docs/audit/`.
 
 | Requisito | Estado | Evidencia | Qué falta |
 |---|---|---|---|
@@ -32,5 +32,5 @@ Rúbrica: "Contenido esperado del reporte Proyecto Integrador" (según la secci�
 1. **"¿Por qué un índice de bienes y no el ingreso?"** → La EMOVI no tiene el ingreso de los padres; los bienes se recuerdan mejor y es la práctica del CEEY. Con el ingreso como destino, el resultado se mantiene (47% vs 51%).
 2. **"Un AUC de 0.70 es bajo, ¿para qué sirve el modelo?"** → Su objetivo no es predecir personas sino medir cuánto pesan las circunstancias. Que no llegue a 0.9 es un hallazgo: la curva de aprendizaje muestra que el límite está en la información, no en el algoritmo.
 3. **"¿Cómo saben que la educación causa la salida de la pobreza?"** → No lo sabemos. Es una asociación mediadora; se mide al mismo tiempo que el destino. Por eso no está en el modelo principal.
-4. **"Si el tono de piel no es significativo, ¿por qué lo mencionan?"** → Porque el promedio oculta heterogeneidad: no hay brecha en el Sur, pero sí en el Norte y el Norte-occidente, y el modelo está mal calibrado para el tono oscuro. Es un hallazgo sobre los límites del modelo.
+4. **"Si el tono de piel no es significativo, ¿por qué lo mencionan?"** → Porque era una hipótesis registrada antes de ver los datos (H4) y un resultado negativo también es un hallazgo. Las diferencias puntuales podrían variar por región, pero la muestra no permite confirmarlo. *(Actualizado tras la auditoría integral: se retiró la afirmación anterior de que el modelo estaba mal calibrado por tono; era un artefacto de una partición de prueba de 114 personas.)*
 5. **"¿Los jóvenes tienen menos movilidad?"** → No podemos afirmarlo: es una sola encuesta y los bienes no son comparables entre generaciones. El efecto de cohorte puede ser un artefacto de medición.
