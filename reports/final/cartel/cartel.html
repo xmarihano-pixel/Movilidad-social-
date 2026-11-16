@@ -21,6 +21,7 @@
 
   /* Encabezado */
   header { display: grid; grid-template-columns: 7.5cm 1fr 7.5cm; gap: 0.8cm; align-items: stretch; }
+  .logo img { max-width: 100%; max-height: 100%; object-fit: contain; }
   .logo { border: 3px dashed var(--borde); border-radius: 12px; display: flex; align-items: center; justify-content: center;
           color: var(--gris); font-size: 26px; text-align: center; padding: 0.4cm; }
   .titulo { border: 3px solid var(--azul); border-radius: 6px; overflow: hidden; }
@@ -53,15 +54,16 @@
   .flecha { text-align: center; color: var(--azul); font-size: 26px; line-height: 0.6; }
 
   /* Resultados */
-  .res .cuerpo { padding-top: 0.25cm; }
+  .res { display: flex; flex-direction: column; }
+  .res .cuerpo { padding-top: 0.25cm; flex: 1; display: flex; flex-direction: column; justify-content: space-evenly; }
   .grid-fig { display: grid; grid-template-columns: 1fr 1fr; gap: 0.35cm 0.5cm; }
   figure { margin: 0; display: flex; flex-direction: column; }
-  figcaption.tit { font-weight: 700; font-size: 30px; text-align: center; margin-bottom: 0.1cm; color: var(--texto); }
+  figcaption.tit { font-weight: 700; font-size: 32px; text-align: center; margin-bottom: 0.1cm; color: var(--texto); }
   figure img { width: 100%; height: auto; display: block; }
-  .fuente { font-size: 22px; color: var(--gris); margin-top: 0.06cm; line-height: 1.2; }
-  .hallazgo { font-size: 31px; margin-top: 0.12cm; line-height: 1.28; }
+  .fuente { font-size: 24px; color: var(--gris); margin-top: 0.06cm; line-height: 1.2; }
+  .hallazgo { font-size: 35px; margin-top: 0.12cm; line-height: 1.28; }
   .hallazgo .n { display: inline-block; background: var(--rojo); color: #fff; font-weight: 700; border-radius: 6px; padding: 0 0.18cm; margin-right: 0.12cm; }
-  .metricas { width: 100%; border-collapse: collapse; font-size: 27px; margin-top: 0.12cm; }
+  .metricas { width: 100%; border-collapse: collapse; font-size: 30px; margin-top: 0.12cm; }
   .metricas th, .metricas td { border-bottom: 1px solid #c9d6e4; padding: 0.06cm 0.12cm; text-align: center; }
   .metricas th { background: var(--azul); color: #fff; font-weight: 600; }
   .metricas td:first-child, .metricas th:first-child { text-align: left; }
@@ -87,14 +89,14 @@
 <div class="poster">
 
 <header>
-  <div class="logo">[Logo de la<br>institución]</div>
+  <div class="logo"><img src="fig/logo_udg.png" alt="Universidad de Guadalajara" onerror="this.outerHTML='[Logo oficial<br>Universidad de<br>Guadalajara]'"></div>
   <div class="titulo">
     <h1>¿Qué tan pegajosa es la pobreza?</h1>
     <h2>Persistencia en la base de la distribución de bienes y desigualdad de oportunidades en México: evidencia de la ESRU-EMOVI 2023 con estadística y <i>Machine Learning</i></h2>
     <div class="autores"><u>[Nombre Apellido]¹</u>, [Nombre Apellido]¹, [Nombre Apellido]¹, [Nombre Apellido]¹</div>
-    <div class="afil">¹ [Institución, Departamento] · Proyecto Integrador: Machine Learning e Inferencia Bayesiana / Matemáticas Aplicadas a la Ciencia de Datos · Profesor(a): [Nombre]</div>
+    <div class="afil">¹ Universidad de Guadalajara, Centro Universitario de Guadalajara (CUGDL) · Proyecto Integrador: Machine Learning e Inferencia Bayesiana / Matemáticas Aplicadas a la Ciencia de Datos · Profesor(a): [Nombre]</div>
   </div>
-  <div class="logo">[Logo del<br>programa / evento]</div>
+  <div class="logo"><img src="fig/logo_cugdl.png" alt="Centro Universitario de Guadalajara (CUGDL)" onerror="this.outerHTML='[Logo oficial<br>CUGDL]'"></div>
 </header>
 
 <main>
