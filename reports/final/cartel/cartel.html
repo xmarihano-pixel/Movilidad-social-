@@ -1,0 +1,265 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<title>Cartel — ¿Qué tan pegajosa es la pobreza?</title>
+<style>
+  /* Cartel 90 × 120 cm. Todas las cifras provienen de reports/tables/ (validadas tras la auditoría). */
+  @page { size: 90cm 120cm; margin: 0; }
+  :root {
+    --azul: #15558f; --azul-osc: #0e3d68; --azul-claro: #e8f0f8; --rojo: #b2312b;
+    --naranja: #e07b39; --gris: #5f6670; --texto: #1d232a; --borde: #9db8d6;
+  }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; padding: 0; background: #ffffff; }
+  body {
+    width: 90cm; height: 120cm; overflow: hidden;
+    font-family: "Segoe UI", "Open Sans", "DejaVu Sans", Arial, sans-serif;
+    color: var(--texto); font-size: 34px; line-height: 1.33;
+  }
+  .poster { padding: 1.2cm 1.4cm; height: 100%; display: flex; flex-direction: column; gap: 0.7cm; }
+
+  /* Encabezado */
+  header { display: grid; grid-template-columns: 7.5cm 1fr 7.5cm; gap: 0.8cm; align-items: stretch; }
+  .logo { border: 3px dashed var(--borde); border-radius: 12px; display: flex; align-items: center; justify-content: center;
+          color: var(--gris); font-size: 26px; text-align: center; padding: 0.4cm; }
+  .titulo { border: 3px solid var(--azul); border-radius: 6px; overflow: hidden; }
+  .titulo h1 { margin: 0; background: var(--azul); color: #fff; font-size: 104px; font-weight: 600; line-height: 1.05;
+               padding: 0.35cm 0.6cm 0.25cm; text-align: center; letter-spacing: 1px; }
+  .titulo h2 { margin: 0; font-size: 44px; font-weight: 500; color: var(--azul-osc); text-align: center; padding: 0.3cm 0.6cm 0.15cm; line-height: 1.2; }
+  .autores { text-align: center; font-size: 33px; padding: 0.1cm 0.6cm 0.1cm; }
+  .afil { text-align: center; font-size: 25px; color: var(--gris); padding: 0 0.6cm 0.3cm; }
+
+  /* Cuerpo */
+  main { flex: 1; display: grid; grid-template-columns: 31.5cm 1fr; gap: 0.8cm; min-height: 0; }
+  .col { display: flex; flex-direction: column; gap: 0.55cm; min-height: 0; }
+  section { border: 2px solid var(--borde); border-radius: 4px; background: #fff; }
+  section > h3 { margin: 0; background: var(--azul); color: #fff; font-size: 50px; font-weight: 500; padding: 0.12cm 0.45cm; }
+  .cuerpo { padding: 0.3cm 0.45cm 0.35cm; }
+  p { margin: 0 0 0.22cm; text-align: justify; hyphens: auto; }
+  ul { margin: 0.05cm 0 0.15cm; padding-left: 1.05em; }
+  li { margin-bottom: 0.12cm; }
+  b, strong { color: var(--azul-osc); }
+  .clave { background: var(--azul-claro); border-left: 10px solid var(--azul); padding: 0.22cm 0.35cm; margin: 0.15cm 0 0.25cm; border-radius: 4px; }
+  .clave b { color: var(--azul-osc); }
+  .ref { color: var(--gris); font-size: 0.85em; }
+
+  /* Metodología: diagrama de flujo */
+  .flujo { display: flex; flex-direction: column; gap: 0.14cm; }
+  .paso { display: grid; grid-template-columns: 1.35cm 1fr; gap: 0.3cm; align-items: center;
+          background: var(--azul-claro); border-radius: 8px; padding: 0.14cm 0.25cm; font-size: 31px; line-height: 1.25; }
+  .num { width: 1.25cm; height: 1.25cm; border-radius: 50%; background: var(--azul); color: #fff; display: flex;
+         align-items: center; justify-content: center; font-weight: 700; font-size: 34px; }
+  .flecha { text-align: center; color: var(--azul); font-size: 26px; line-height: 0.6; }
+
+  /* Resultados */
+  .res .cuerpo { padding-top: 0.25cm; }
+  .grid-fig { display: grid; grid-template-columns: 1fr 1fr; gap: 0.35cm 0.5cm; }
+  figure { margin: 0; display: flex; flex-direction: column; }
+  figcaption.tit { font-weight: 700; font-size: 30px; text-align: center; margin-bottom: 0.1cm; color: var(--texto); }
+  figure img { width: 100%; height: auto; display: block; }
+  .fuente { font-size: 22px; color: var(--gris); margin-top: 0.06cm; line-height: 1.2; }
+  .hallazgo { font-size: 31px; margin-top: 0.12cm; line-height: 1.28; }
+  .hallazgo .n { display: inline-block; background: var(--rojo); color: #fff; font-weight: 700; border-radius: 6px; padding: 0 0.18cm; margin-right: 0.12cm; }
+  .metricas { width: 100%; border-collapse: collapse; font-size: 27px; margin-top: 0.12cm; }
+  .metricas th, .metricas td { border-bottom: 1px solid #c9d6e4; padding: 0.06cm 0.12cm; text-align: center; }
+  .metricas th { background: var(--azul); color: #fff; font-weight: 600; }
+  .metricas td:first-child, .metricas th:first-child { text-align: left; }
+  .metricas tr.elegido td { background: #fff2d9; font-weight: 700; }
+  .fila3 { display: grid; grid-template-columns: 1.1fr 1fr 0.85fr; gap: 0.5cm; margin-top: 0.3cm; }
+  .exploratorio { border: 2px dashed var(--naranja); border-radius: 6px; padding: 0.15cm; }
+  .tag { display: inline-block; background: var(--naranja); color: #fff; font-size: 20px; font-weight: 700; padding: 0 0.15cm; border-radius: 4px; }
+
+  /* Pie */
+  footer { display: grid; grid-template-columns: 1.25fr 1fr 0.95fr; gap: 0.8cm; }
+  .conclusiones > h3 { background: var(--rojo); }
+  .conclusiones { border-color: #d9a39f; }
+  .respuesta { font-size: 34px; font-weight: 700; color: var(--rojo); margin-bottom: 0.2cm; line-height: 1.25; }
+  .refs { font-size: 22px; line-height: 1.25; }
+  .refs p { margin: 0 0 0.08cm; text-align: left; }
+  .contacto { display: grid; grid-template-columns: 1fr 5.2cm; gap: 0.4cm; align-items: center; margin-top: 0.2cm; }
+  .contacto img { width: 5.2cm; height: 5.2cm; }
+  .contacto .t { font-size: 24px; }
+  .pequeno { font-size: 29px; }
+</style>
+</head>
+<body>
+<div class="poster">
+
+<header>
+  <div class="logo">[Logo de la<br>institución]</div>
+  <div class="titulo">
+    <h1>¿Qué tan pegajosa es la pobreza?</h1>
+    <h2>Persistencia en la base de la distribución de bienes y desigualdad de oportunidades en México: evidencia de la ESRU-EMOVI 2023 con estadística y <i>Machine Learning</i></h2>
+    <div class="autores"><u>[Nombre Apellido]¹</u>, [Nombre Apellido]¹, [Nombre Apellido]¹, [Nombre Apellido]¹</div>
+    <div class="afil">¹ [Institución, Departamento] · Proyecto Integrador: Machine Learning e Inferencia Bayesiana / Matemáticas Aplicadas a la Ciencia de Datos · Profesor(a): [Nombre]</div>
+  </div>
+  <div class="logo">[Logo del<br>programa / evento]</div>
+</header>
+
+<main>
+  <!-- ============ COLUMNA IZQUIERDA ============ -->
+  <div class="col">
+
+    <section>
+      <h3>1. Contexto</h3>
+      <div class="cuerpo">
+        <p>La <b>movilidad social intergeneracional</b> mide cuánto cambia la posición socioeconómica de una persona respecto al hogar en que creció. No es lo mismo que <b>pobreza</b> (carencias en un momento dado) ni que <b>ingreso</b> (un flujo de dinero): es una medida de <b>igualdad de oportunidades</b>.</p>
+        <p>En México, el CEEY ha documentado que el origen pesa mucho y que las brechas son regionales <span class="ref">[1, 2]</span>; la literatura internacional describe una "geografía de las oportunidades" <span class="ref">[3]</span> y, en México, brechas por tono de piel y etnicidad <span class="ref">[4]</span>.</p>
+        <p><b>Ecosistema de datos:</b> CEEY (ESRU-EMOVI 2023, la única fuente con origen y destino de la misma persona), CONEVAL (pobreza 2022) e INEGI (ENIGH y ENOE 2022) <span class="ref">[1, 5, 6]</span>.</p>
+        <p><b>¿Por qué ML?</b> Permite evaluar muchas circunstancias a la vez, medir <i>cuánto</i> del destino predicen y comprobar si los resultados son estables, como complemento de los modelos estadísticos clásicos.</p>
+      </div>
+    </section>
+
+    <section>
+      <h3>2. Problemática</h3>
+      <div class="cuerpo">
+        <p><b>Problema:</b> no basta con saber cuántas personas son pobres hoy; importa saber si la desventaja <b>se hereda</b> y qué circunstancias de origen la acompañan.</p>
+        <div class="clave"><b>Pregunta:</b> de quienes crecieron en el <b>20% de hogares con menos bienes</b>, ¿cuántos siguen ahí de adultos y qué circunstancias de origen se asocian con quedarse?</div>
+        <p><b>Objetivo:</b> medir esa persistencia y comparar modelos estadísticos y de ML que identifiquen las circunstancias asociadas, sin atribuir causalidad.</p>
+        <p><b>Alcance:</b> 25–64 años (60 millones representados); movilidad <b>relativa</b> intergeneracional; nacional y regional.</p>
+      </div>
+    </section>
+
+    <section>
+      <h3>3. Propuesta</h3>
+      <div class="cuerpo">
+        <p>Tres miradas complementarias sobre los mismos datos:</p>
+        <ul>
+          <li><b>Descriptiva</b> — matriz de transición ponderada: ¿cuánto persiste?</li>
+          <li><b>Explicativa</b> — regresión logística con errores por diseño muestral: ¿qué se asocia y con qué magnitud?</li>
+          <li><b>Predictiva</b> — 6 modelos comparados: ¿cuánto del destino explican las circunstancias de origen?</li>
+        </ul>
+        <p><b>Aporte:</b> además de describir, mide el <b>límite</b> de lo que el origen explica y verifica la robustez con una auditoría independiente. Es una herramienta de análisis, <b>no</b> una intervención ni un sistema para seleccionar personas.</p>
+      </div>
+    </section>
+
+    <section style="flex:1">
+      <h3>4. Metodología</h3>
+      <div class="cuerpo flujo">
+        <div class="paso"><div class="num">1</div><div><b>Datos:</b> ESRU-EMOVI 2023 (17,843 personas, 296 variables, factor de expansión) + CONEVAL y ENOE 2022 resumidos por estado.</div></div>
+        <div class="flecha">▼</div>
+        <div class="paso"><div class="num">2</div><div><b>Limpieza:</b> "No sabe" → faltante; escolaridad de padres faltante (10–19%, no aleatoria) como categoría "ausente". Sin eliminar casos.</div></div>
+        <div class="flecha">▼</div>
+        <div class="paso"><div class="num">3</div><div><b>Índices (PCA):</b> bienes del hogar a los 14 años (45 variables) y hoy (46) → <b>quintiles ponderados por cohorte</b>.</div></div>
+        <div class="flecha">▼</div>
+        <div class="paso"><div class="num">4</div><div><b>Objetivo:</b> creció en Q1 y sigue en Q1 (sí/no). n = 2,674; clases 52/48.</div></div>
+        <div class="flecha">▼</div>
+        <div class="paso"><div class="num">5</div><div><b>Modelos:</b> logística, árbol, random forest, gradient boosting + 2 baselines. 80/20 estratificado, CV 5 particiones, 10 semillas. Solo circunstancias de origen (sin <i>leakage</i>).</div></div>
+        <div class="flecha">▼</div>
+        <div class="paso"><div class="num">6</div><div><b>Interpretación:</b> razones de momios (errores por conglomerado), importancia por permutación y SHAP.</div></div>
+        <div class="flecha">▼</div>
+        <div class="paso"><div class="num">7</div><div><b>Validación:</b> IC por conglomerados, subgrupos fuera de muestra, 3 definiciones del objetivo y reproducción completa (29/29 tablas idénticas).</div></div>
+      </div>
+      <div class="cuerpo" style="padding-top:0">
+        <div class="clave" style="font-size:29px"><b>Definiciones clave.</b> <b>Q1</b> = el 20% de hogares con menos bienes y servicios <i>de su propia generación</i> (no es la pobreza oficial). <b>Razón de momios (RM)</b> &gt; 1 = más probabilidad relativa de seguir en Q1. <b>AUC</b> = qué tan bien ordena el modelo a quien sigue frente a quien sale (0.5 = azar). <b>IC 95%</b> = rango de valores compatibles con los datos.</div>
+      </div>
+    </section>
+  </div>
+
+  <!-- ============ COLUMNA DERECHA: RESULTADOS ============ -->
+  <div class="col">
+    <section class="res" style="flex:1">
+      <h3>5. Resultados</h3>
+      <div class="cuerpo">
+        <div class="grid-fig">
+          <figure>
+            <figcaption class="tit">Figura 1. Posición a los 14 años vs. posición adulta (%)</figcaption>
+            <img src="fig/f1_matriz.png" alt="Matriz de transición de quintiles de bienes">
+            <div class="hallazgo"><span class="n">R1</span><b>La desventaja es pegajosa:</b> <b>51%</b> (IC 95%: 46–55%) de quienes crecen en el 20% con menos bienes sigue ahí; solo <b>2%</b> llega al 20% con más bienes. Arriba, 55% se queda. Robusto con 3 definiciones (47–51%).</div>
+          </figure>
+          <figure>
+            <figcaption class="tit">Figura 2. ¿Para quién es más pegajosa? (% que sigue en Q1)</figcaption>
+            <img src="fig/f2_grupos.png" alt="Persistencia por región, lengua, localidad, tono y escolaridad con IC">
+            <div class="fuente">* Escolaridad propia: mediadora, se mide junto con el destino; no es circunstancia de origen.</div>
+          </figure>
+          <figure>
+            <figcaption class="tit">Figura 3. Circunstancias asociadas, con todo lo demás constante</figcaption>
+            <img src="fig/f4_momios.png" alt="Razones de momios de la regresión logística">
+            <div class="hallazgo"><span class="n">R2</span><b>Territorio y lengua:</b> crecer en el <b>Sur</b> (RM 1.84), en un <b>pueblo</b> (1.52) o <b>hablar lengua indígena</b> (1.88) se asocia con mayor persistencia; los resultados se mantienen con y sin pesos. El tono de piel <b>no</b> fue significativo.</div>
+          </figure>
+          <figure>
+            <figcaption class="tit">Figura 4. Las desventajas se acumulan</figcaption>
+            <img src="fig/f3_desventajas.png" alt="Persistencia según número de desventajas de origen">
+            <div class="hallazgo"><span class="n">R3</span><b>Se suman:</b> de <b>30%</b> sin ninguna desventaja a <b>82%</b> con Sur + pueblo + lengua indígena. Sin sinergia: las interacciones no fueron significativas (p = 0.20).</div>
+          </figure>
+        </div>
+
+        <div class="fila3">
+          <figure>
+            <figcaption class="tit">Figura 5. Comparación de modelos</figcaption>
+            <img src="fig/f5_modelos.png" alt="AUC y tiempo de entrenamiento por modelo">
+            <table class="metricas">
+              <tr><th>Prueba (n = 535)</th><th>AUC</th><th>Exact. bal.</th><th>F1</th><th>Brier</th></tr>
+              <tr><td>Base mayoritaria</td><td>0.50</td><td>0.50</td><td>0.68</td><td>0.250</td></tr>
+              <tr class="elegido"><td>Regresión logística ★</td><td>0.72</td><td>0.67</td><td>0.68</td><td>0.214</td></tr>
+              <tr><td>Random forest</td><td>0.72</td><td>0.65</td><td>0.68</td><td>0.219</td></tr>
+              <tr><td>Gradient boosting</td><td>0.72</td><td>0.66</td><td>0.67</td><td>0.213</td></tr>
+            </table>
+            <div class="hallazgo"><span class="n">R4</span><b>Se eligió la logística:</b> iguala a los modelos complejos, es estable (±0.002 entre 10 semillas), la más rápida e interpretable, y está calibrada por sexo, lengua, región y tono. La curva de aprendizaje se aplana en ≈0.70: <b>el límite está en la información disponible</b>, no en el algoritmo.</div>
+          </figure>
+          <figure>
+            <figcaption class="tit">Figura 6. Escenarios hipotéticos</figcaption>
+            <img src="fig/f6_escenarios.png" alt="Cambio estimado en la persistencia bajo escenarios hipotéticos">
+            <div class="hallazgo"><i>Bajo el supuesto</i> de un nivel educativo más y empleo formal, <i>manteniendo las relaciones estimadas</i>, la persistencia sería ≈16 pts menor. Son <b>asociaciones, no efectos causales</b>: la escolaridad y el empleo se miden al mismo tiempo que el destino.</div>
+          </figure>
+          <figure class="exploratorio">
+            <figcaption class="tit"><span class="tag">EXPLORATORIO</span> Figura 7. Pobreza estatal y persistencia</figcaption>
+            <img src="fig/f7_estados.png" alt="Pobreza estatal 2022 vs persistencia por estado">
+            <div class="fuente">Tamaño = n efectivo. La EMOVI no es representativa por estado y la pobreza es de 2022 (no de la infancia). Solo describe estados, no personas.</div>
+          </figure>
+        </div>
+        <div class="fuente" style="margin-top:0.15cm">Fuente de todas las figuras: elaboración propia con ESRU-EMOVI 2023 (CEEY), CONEVAL 2022 e INEGI-ENOE 2022. Tasas ponderadas; IC 95% por bootstrap de conglomerados (UPM).</div>
+      </div>
+    </section>
+  </div>
+</main>
+
+<footer>
+  <section class="conclusiones">
+    <h3>6. Conclusiones</h3>
+    <div class="cuerpo">
+      <div class="respuesta">Sí, es pegajosa: cerca de 1 de cada 2 personas que crece en el 20% de hogares con menos bienes sigue ahí de adulta, y casi nadie llega al extremo superior.</div>
+      <ul class="pequeno">
+        <li>La persistencia se concentra en el <b>Sur</b>, en <b>pueblos</b> y entre <b>hablantes de lengua indígena</b>, y crece cuando estas desventajas se combinan.</li>
+        <li>La escolaridad es la característica más asociada con haber salido, pero no basta: <b>43%</b> de quienes superaron la escolaridad de sus padres sigue en Q1.</li>
+        <li>Las circunstancias observadas explican solo una parte del destino (AUC ≈ 0.70); el resto corresponde a factores no medidos, no a un "mérito" demostrado.</li>
+        <li><b>Evaluación del método:</b> la auditoría corrigió la incertidumbre y retiró un hallazgo espurio (un supuesto sesgo del modelo por tono de piel que provenía de una sola partición de 114 personas). Todo lo presentado es reproducible y es <b>asociación, no causalidad</b>.</li>
+      </ul>
+    </div>
+  </section>
+
+  <section>
+    <h3>7. Perspectivas</h3>
+    <div class="cuerpo pequeno">
+      <p><b>Etapa:</b> análisis completo y auditado; válido a nivel nacional y regional.</p>
+      <p><b>Límites y sesgos:</b> origen retrospectivo (memoria), sesgo de supervivencia, lengua y tono medidos hoy, n efectivo de Q1 ≈ 815.</p>
+      <ul>
+        <li><b>EMOVI 2011 y 2017</b> con la misma metodología, para separar el efecto de cohorte del ciclo de vida.</li>
+        <li>Indicadores <b>municipales del censo</b> del año en que cada persona tenía 14 años, en lugar de datos de 2022.</li>
+        <li><b>Diseño cuasi-causal</b> para la educación (p. ej., reformas de escolaridad obligatoria).</li>
+        <li><b>Modelos multinivel</b> y estimación de áreas pequeñas para resultados estatales defendibles.</li>
+      </ul>
+    </div>
+  </section>
+
+  <section>
+    <h3>Referencias</h3>
+    <div class="cuerpo refs">
+      <p>[1] CEEY. <i>Encuesta ESRU de Movilidad Social en México 2023</i>. ceey.org.mx</p>
+      <p>[2] CEEY (2019). <i>Informe de Movilidad Social en México 2019: Hacia la igualdad regional de oportunidades</i>.</p>
+      <p>[3] Chetty, R. et al. (2014). Where is the land of opportunity? <i>QJE, 129</i>(4), 1553–1623.</p>
+      <p>[4] Campos-Vázquez, R. M. y Medina-Cortina, E. M. (2019). Skin color and social mobility: Evidence from Mexico. <i>Demography, 56</i>(1).</p>
+      <p>[5] CONEVAL (2023). <i>Medición de la pobreza 2022</i>. · [6] INEGI. <i>ENIGH y ENOE 2022</i>.</p>
+      <p>[7] Filmer, D. y Pritchett, L. (2001). Estimating wealth effects without expenditure data. <i>Demography, 38</i>(1). · [8] Breiman, L. (2001). Random forests. <i>Machine Learning, 45</i>.</p>
+      <div class="contacto">
+        <div class="t"><b>Contacto:</b><br>[Nombre] · [correo@institución]<br>[Nombre] · [correo@institución]<br><br><b>Código, datos y auditoría:</b><br>github.com/xmarihano-pixel/Movilidad-social-</div>
+        <img src="fig/qr_repo.png" alt="QR al repositorio">
+      </div>
+    </div>
+  </section>
+</footer>
+
+</div>
+</body>
+</html>
