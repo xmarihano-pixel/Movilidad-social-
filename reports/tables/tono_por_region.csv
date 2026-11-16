@@ -1,7 +1,19 @@
-region_14,Claro (H-K),Medio (F-G),Oscuro (A-E),n total
-Centro,42.0,45.5,54.8,632.0
-Centro-norte,33.1,30.8,31.1,243.0
-Norte,14.7,19.3,32.9,198.0
-Norte-occidente,18.6,37.8,53.7,242.0
-Sur,65.0,63.8,64.3,1355.0
-NACIONAL,49.4,49.8,55.7,2674.0
+,Región,Tono,%,IC 95% inf,IC 95% sup,n,n efectivo
+0,Centro,Claro (H-K),42.0,27.8,56.4,120,55.1
+1,Centro,Medio (F-G),45.5,36.6,55.4,411,137.1
+2,Centro,Oscuro (A-E),54.8,35.3,72.7,101,27.9
+3,Centro-norte,Claro (H-K),33.1,11.6,62.4,48,11.7
+4,Centro-norte,Medio (F-G),30.8,16.8,43.7,144,51.1
+5,Centro-norte,Oscuro (A-E),31.1,18.5,50.6,51,27.5
+6,Norte,Claro (H-K),14.7,2.5,36.1,24,13.5
+7,Norte,Medio (F-G),19.3,8.8,33.6,124,23.6
+8,Norte,Oscuro (A-E),32.9,16.3,54.0,50,20.0
+9,Norte-occidente,Claro (H-K),18.6,5.5,39.6,45,14.3
+10,Norte-occidente,Medio (F-G),37.8,22.1,50.3,149,38.3
+11,Norte-occidente,Oscuro (A-E),53.7,17.0,71.0,48,19.7
+12,Sur,Claro (H-K),65.0,53.7,75.4,180,62.0
+13,Sur,Medio (F-G),63.8,57.8,69.1,849,361.3
+14,Sur,Oscuro (A-E),64.3,54.5,73.7,326,128.3
+15,NACIONAL,Claro (H-K),49.4,40.8,57.6,417,142.7
+16,NACIONAL,Medio (F-G),49.8,44.7,55.1,1679,501.3
+17,NACIONAL,Oscuro (A-E),55.7,47.4,63.5,578,174.9

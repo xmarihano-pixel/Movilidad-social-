@@ -46,3 +46,4 @@ Dictamen: **APROBADO CON CAMBIOS** (`docs/audit/`). Versión original congelada 
 | D33 | 7 | Se agrega el **tiempo de entrenamiento** a la comparación de modelos | Lo pide la rúbrica del reporte (`docs/rubric/Reporte_Final.pdf`, sección 6) | — |
 | D34 | 13 | `requirements.txt` con versiones fijas y pruebas mínimas en `tests/` | Reproducibilidad — H-14/H-17 | — |
 | D35 | 13 | La verificación de referencias y de la cifra del CEEY **se pospone**; se conservan los enlaces | Decisión del equipo | Pendiente antes de la entrega final |
+| D36 | 9 | Se registra un **cambio en un resultado** tras la corrección C-07: crecer en un pueblo (frente a una ciudad) pasa a ser significativo (RM 1.52, IC 1.11–2.09; sin pesos 1.46) | Con la referencia "Metrópoli" (82 casos) la estimación era inestable y lo ocultaba | H2 del equipo: la parte "rural" pasa de "solo descriptiva" a **apoyada** |

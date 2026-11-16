@@ -32,6 +32,7 @@ flowchart LR
 | 🧭 **La región pesa más que todo** | Siguen en el 20% con menos bienes: **64%** de quienes crecieron en el Sur (IC 59–69) vs **23%** en el Norte (IC 12–37) |
 | 🗣️ **Lengua indígena** | **69%** (IC 60–77) vs 47% (IC 42–52). Casi el doble de momios, aun con la misma región y un origen similar (lengua que se habla hoy) |
 | 🎓 **La escolaridad propia es la característica más asociada con haber salido** | 56% sigue con primaria o menos vs **18%** con estudios profesionales (IC 8–30). Es mediadora, no causa demostrada |
+| 🏘️ **Crecer en un pueblo** | Momios 1.5 veces mayores que en una ciudad, con la misma región, lengua y origen (p = 0.009; se mantiene sin pesos) |
 | ➕ **Desventajas acumuladas** | Sur + pueblo + lengua indígena: **82%** sigue (IC 74–88) vs **30%** sin ninguna (IC 22–38) |
 | 🤖 **Modelo** | La regresión logística (AUC ≈ 0.70) iguala a random forest y gradient boosting, es la más interpretable y de las más rápidas. Está calibrada por sexo, lengua, región y tono de piel (fuera de muestra) |
 | ✅ **Robusto** | Entre 47% y 51% con tres definiciones distintas de riqueza |
@@ -53,7 +54,7 @@ flowchart LR
 | # | Hipótesis | Veredicto |
 |---|---|---|
 | H1 | Más de 40% de quienes nacen en Q1 siguen en Q1 | ✅ Se confirma (51%, IC 46–55) |
-| H2 | Crecer en el Sur o en zona rural aumenta la persistencia | ✅ Sur · ⚠️ Rural solo en la descripción |
+| H2 | Crecer en el Sur o en zona rural aumenta la persistencia | ✅ Sur (RM 1.8) · ✅ Pueblo frente a ciudad (RM 1.5, tras corregir la referencia en la auditoría) |
 | H3 | La escolaridad de la madre reduce la persistencia | ❌ No se observa dentro de Q1 (casi no hay variación) |
 | H4 | Lengua indígena y tono oscuro aumentan la persistencia | ✅ Lengua · ⚪ Tono: sin evidencia significativa |
 | H5 | Los modelos complejos no superan a la logística | ✅ Se confirma |
