@@ -23,8 +23,7 @@
   header { display: grid; grid-template-columns: 13cm 1fr 13cm; gap: 0.8cm; align-items: stretch; }
   .logo img { max-width: 100%; max-height: 100%; object-fit: contain; }
   .logo-udg { background: var(--udg); border: none; border-radius: 6px; padding: 0.5cm 0.7cm; }
-  .logo-udg.cu { color: #fff; font-size: 34px; line-height: 1.3; }
-  .logo-udg.cu b { color: #fff; font-size: 44px; letter-spacing: 2px; }
+  .logo-cu { background: #fff; border: 2px solid var(--borde) !important; border-radius: 6px; padding: 0.4cm 0.5cm; }
   .logo { border: 3px dashed var(--borde); border-radius: 12px; display: flex; align-items: center; justify-content: center;
           color: var(--gris); font-size: 26px; text-align: center; padding: 0.4cm; }
   .titulo { border: 3px solid var(--azul); border-radius: 6px; overflow: hidden; }
@@ -82,9 +81,10 @@
   .respuesta { font-size: 34px; font-weight: 700; color: var(--rojo); margin-bottom: 0.2cm; line-height: 1.25; }
   .refs { font-size: 22px; line-height: 1.25; }
   .refs p { margin: 0 0 0.08cm; text-align: left; }
-  .contacto { display: grid; grid-template-columns: 1fr 5.2cm; gap: 0.4cm; align-items: center; margin-top: 0.2cm; }
+  .contacto { display: grid; grid-template-columns: 1fr 5.6cm; gap: 0.4cm; align-items: center; margin-top: 0.2cm; }
   .contacto img { width: 5.2cm; height: 5.2cm; }
-  .contacto .t { font-size: 24px; }
+  .contacto .t { font-size: 23px; line-height: 1.25; }
+  .ct { margin-top: 0.12cm; } .ct span { color: var(--gris); }
   .pequeno { font-size: 29px; }
 </style>
 </head>
@@ -96,10 +96,10 @@
   <div class="titulo">
     <h1>¿Qué tan pegajosa es la pobreza?</h1>
     <h2>Persistencia en la base de la distribución de bienes y desigualdad de oportunidades en México: evidencia de la ESRU-EMOVI 2023 con estadística y <i>Machine Learning</i></h2>
-    <div class="autores"><u>[Nombre Apellido]¹</u>, [Nombre Apellido]¹, [Nombre Apellido]¹, [Nombre Apellido]¹</div>
+    <div class="autores">José Marihano Ponce Campos¹, Tanya Melina Alvarez Velazquez¹, Luis David Velazquez Raíz¹, Iván Alejandro Toledano Juárez¹</div>
     <div class="afil">¹ Universidad de Guadalajara, Centro Universitario de Guadalajara (CUGDL) · Proyecto Integrador: ML e Inferencia Bayesiana / Matemáticas Aplicadas a la Ciencia de Datos · Prof.: [Nombre]</div>
   </div>
-  <div class="logo logo-udg cu"><img src="fig/logo_cugdl.png" alt="Centro Universitario de Guadalajara (CUGDL)" onerror="this.outerHTML='<div>Centro Universitario<br>de Guadalajara<br><b>CUGDL</b></div>'"></div>
+  <div class="logo logo-cu"><img src="fig/logo_cugdl.png" alt="CUGDL — Centro Universitario de Guadalajara"></div>
 </header>
 
 <main>
@@ -258,7 +258,11 @@
       <p>[5] CONEVAL (2023). <i>Medición de la pobreza 2022</i>. · [6] INEGI. <i>ENIGH y ENOE 2022</i>.</p>
       <p>[7] Filmer, D. y Pritchett, L. (2001). Estimating wealth effects without expenditure data. <i>Demography, 38</i>(1). · [8] Breiman, L. (2001). Random forests. <i>Machine Learning, 45</i>.</p>
       <div class="contacto">
-        <div class="t"><b>Contacto:</b><br>[Nombre] · [correo@institución]<br>[Nombre] · [correo@institución]<br><br><b>Código, datos y auditoría:</b><br>github.com/xmarihano-pixel/Movilidad-social-</div>
+        <div class="t"><b>Contacto:</b>
+          <div class="ct">José Marihano Ponce Campos<br><span>jose.ponce6174@alumnos.udg.mx</span></div>
+          <div class="ct">Tanya Melina Alvarez Velazquez<br><span>tanya.alvarez6817@alumnos.udg.mx</span></div>
+          <div class="ct">Luis David Velazquez Raíz<br><span>luis.velazquez6442@alumnos.udg.mx</span></div>
+          <div class="ct"><b>Código, datos y auditoría:</b><br><span>github.com/xmarihano-pixel/<wbr>Movilidad-social-</span></div></div>
         <img src="fig/qr_repo.png" alt="QR al repositorio">
       </div>
     </div>
