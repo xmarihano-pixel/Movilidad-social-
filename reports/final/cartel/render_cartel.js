@@ -12,7 +12,7 @@ const path = require('path');
   // Revisión de desbordes: secciones cuyo contenido no cabe
   const over = await page.evaluate(() => {
     const out = [];
-    document.querySelectorAll('section, .poster, main, footer').forEach(el => {
+    document.querySelectorAll('section, .poster, main, footer, .col').forEach(el => {
       if (el.scrollHeight > el.clientHeight + 2) out.push((el.querySelector('h3')?.innerText || el.className) + ': +' + (el.scrollHeight - el.clientHeight) + 'px');
     });
     const p = document.querySelector('.poster');

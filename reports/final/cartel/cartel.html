@@ -7,8 +7,8 @@
   /* Cartel 90 × 120 cm. Todas las cifras provienen de reports/tables/ (validadas tras la auditoría). */
   @page { size: 90cm 120cm; margin: 0; }
   :root {
-    --azul: #15558f; --azul-osc: #0e3d68; --azul-claro: #e8f0f8; --rojo: #b2312b;
-    --naranja: #e07b39; --gris: #5f6670; --texto: #1d232a; --borde: #9db8d6;
+    --azul: #202945; --azul-osc: #202945; --azul-claro: #eceef4; --rojo: #B12028; --udg: #202945;
+    --naranja: #e07b39; --gris: #5f6670; --texto: #1d232a; --borde: #a9aec2;
   }
   * { box-sizing: border-box; }
   html, body { margin: 0; padding: 0; background: #ffffff; }
@@ -20,8 +20,11 @@
   .poster { padding: 1.2cm 1.4cm; height: 100%; display: flex; flex-direction: column; gap: 0.7cm; }
 
   /* Encabezado */
-  header { display: grid; grid-template-columns: 7.5cm 1fr 7.5cm; gap: 0.8cm; align-items: stretch; }
+  header { display: grid; grid-template-columns: 13cm 1fr 13cm; gap: 0.8cm; align-items: stretch; }
   .logo img { max-width: 100%; max-height: 100%; object-fit: contain; }
+  .logo-udg { background: var(--udg); border: none; border-radius: 6px; padding: 0.5cm 0.7cm; }
+  .logo-udg.cu { color: #fff; font-size: 34px; line-height: 1.3; }
+  .logo-udg.cu b { color: #fff; font-size: 44px; letter-spacing: 2px; }
   .logo { border: 3px dashed var(--borde); border-radius: 12px; display: flex; align-items: center; justify-content: center;
           color: var(--gris); font-size: 26px; text-align: center; padding: 0.4cm; }
   .titulo { border: 3px solid var(--azul); border-radius: 6px; overflow: hidden; }
@@ -29,12 +32,12 @@
                padding: 0.35cm 0.6cm 0.25cm; text-align: center; letter-spacing: 1px; }
   .titulo h2 { margin: 0; font-size: 44px; font-weight: 500; color: var(--azul-osc); text-align: center; padding: 0.3cm 0.6cm 0.15cm; line-height: 1.2; }
   .autores { text-align: center; font-size: 33px; padding: 0.1cm 0.6cm 0.1cm; }
-  .afil { text-align: center; font-size: 25px; color: var(--gris); padding: 0 0.6cm 0.3cm; }
+  .afil { text-align: center; font-size: 23px; color: var(--gris); padding: 0 0.6cm 0.3cm; }
 
   /* Cuerpo */
   main { flex: 1; display: grid; grid-template-columns: 31.5cm 1fr; gap: 0.8cm; min-height: 0; }
   .col { display: flex; flex-direction: column; gap: 0.55cm; min-height: 0; }
-  section { border: 2px solid var(--borde); border-radius: 4px; background: #fff; }
+  section { border: 2px solid var(--borde); border-radius: 4px; background: #fff; flex-shrink: 0; }
   section > h3 { margin: 0; background: var(--azul); color: #fff; font-size: 50px; font-weight: 500; padding: 0.12cm 0.45cm; }
   .cuerpo { padding: 0.3cm 0.45cm 0.35cm; }
   p { margin: 0 0 0.22cm; text-align: justify; hyphens: auto; }
@@ -89,14 +92,14 @@
 <div class="poster">
 
 <header>
-  <div class="logo"><img src="fig/logo_udg.png" alt="Universidad de Guadalajara" onerror="this.outerHTML='[Logo oficial<br>Universidad de<br>Guadalajara]'"></div>
+  <div class="logo logo-udg"><img src="fig/logo_udg.png" alt="Universidad de Guadalajara — Red Universitaria e Institución Benemérita de Jalisco"></div>
   <div class="titulo">
     <h1>¿Qué tan pegajosa es la pobreza?</h1>
     <h2>Persistencia en la base de la distribución de bienes y desigualdad de oportunidades en México: evidencia de la ESRU-EMOVI 2023 con estadística y <i>Machine Learning</i></h2>
     <div class="autores"><u>[Nombre Apellido]¹</u>, [Nombre Apellido]¹, [Nombre Apellido]¹, [Nombre Apellido]¹</div>
-    <div class="afil">¹ Universidad de Guadalajara, Centro Universitario de Guadalajara (CUGDL) · Proyecto Integrador: Machine Learning e Inferencia Bayesiana / Matemáticas Aplicadas a la Ciencia de Datos · Profesor(a): [Nombre]</div>
+    <div class="afil">¹ Universidad de Guadalajara, Centro Universitario de Guadalajara (CUGDL) · Proyecto Integrador: ML e Inferencia Bayesiana / Matemáticas Aplicadas a la Ciencia de Datos · Prof.: [Nombre]</div>
   </div>
-  <div class="logo"><img src="fig/logo_cugdl.png" alt="Centro Universitario de Guadalajara (CUGDL)" onerror="this.outerHTML='[Logo oficial<br>CUGDL]'"></div>
+  <div class="logo logo-udg cu"><img src="fig/logo_cugdl.png" alt="Centro Universitario de Guadalajara (CUGDL)" onerror="this.outerHTML='<div>Centro Universitario<br>de Guadalajara<br><b>CUGDL</b></div>'"></div>
 </header>
 
 <main>
@@ -108,8 +111,8 @@
       <div class="cuerpo">
         <p>La <b>movilidad social intergeneracional</b> mide cuánto cambia la posición socioeconómica de una persona respecto al hogar en que creció. No es lo mismo que <b>pobreza</b> (carencias en un momento dado) ni que <b>ingreso</b> (un flujo de dinero): es una medida de <b>igualdad de oportunidades</b>.</p>
         <p>En México, el CEEY ha documentado que el origen pesa mucho y que las brechas son regionales <span class="ref">[1, 2]</span>; la literatura internacional describe una "geografía de las oportunidades" <span class="ref">[3]</span> y, en México, brechas por tono de piel y etnicidad <span class="ref">[4]</span>.</p>
-        <p><b>Ecosistema de datos:</b> CEEY (ESRU-EMOVI 2023, la única fuente con origen y destino de la misma persona), CONEVAL (pobreza 2022) e INEGI (ENIGH y ENOE 2022) <span class="ref">[1, 5, 6]</span>.</p>
-        <p><b>¿Por qué ML?</b> Permite evaluar muchas circunstancias a la vez, medir <i>cuánto</i> del destino predicen y comprobar si los resultados son estables, como complemento de los modelos estadísticos clásicos.</p>
+        <p><b>Ecosistema de datos:</b> CEEY (ESRU-EMOVI 2023: origen y destino de la misma persona), CONEVAL (pobreza 2022) e INEGI (ENIGH y ENOE 2022) <span class="ref">[1, 5, 6]</span>.</p>
+        <p><b>¿Por qué ML?</b> Permite evaluar muchas circunstancias a la vez, medir <i>cuánto</i> del destino predicen y comprobar si los resultados son estables, además de los modelos estadísticos clásicos.</p>
       </div>
     </section>
 
