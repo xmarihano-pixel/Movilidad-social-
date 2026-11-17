@@ -1,0 +1,244 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<title>Reporte Final — ¿Qué tan pegajosa es la pobreza?</title>
+<script>
+  window.MathJax = { tex: { inlineMath: [['$', '$'], ['\\(', '\\)']], displayMath: [['$$', '$$']] },
+                     svg: { fontCache: 'global' }, startup: { typeset: true } };
+</script>
+<script src="https://cdn.jsdelivr.net/npm/mathjax@3.2.2/es5/tex-svg.js"></script>
+<style>
+  /* Reporte técnico, tamaño carta. Todas las cifras provienen de reports/tables/ (validadas tras la auditoría). */
+  @page { size: Letter; margin: 2cm 2cm 2.1cm 2cm; }
+  :root { --udg: #202945; --rojo: #B12028; --gris: #5f6670; --claro: #eceef4; }
+  * { box-sizing: border-box; }
+  body { font-family: "Times New Roman", "DejaVu Serif", Georgia, serif; font-size: 11pt; line-height: 1.38; color: #1d232a; margin: 0; }
+  h1, h2, h3, .portada, figcaption, table { font-family: "Montserrat", "Segoe UI", "DejaVu Sans", Arial, sans-serif; }
+  .portada { border-bottom: 3px solid var(--udg); padding-bottom: 0.35cm; margin-bottom: 0.45cm; }
+  .logos { display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.3cm; }
+  .logos .udg { background: var(--udg); padding: 0.2cm 0.35cm; border-radius: 4px; }
+  .logos .udg img { height: 1.35cm; display: block; }
+  .logos .cu img { height: 1.35cm; display: block; }
+  .portada .tipo { font-size: 9pt; letter-spacing: 1.5px; color: var(--gris); text-transform: uppercase; }
+  h1 { font-size: 20pt; color: var(--udg); margin: 0.1cm 0 0.05cm; line-height: 1.15; }
+  .sub { font-size: 11.5pt; color: var(--udg); margin-bottom: 0.2cm; }
+  .meta { font-size: 9.5pt; line-height: 1.4; }
+  .meta b { color: var(--udg); }
+  .resumen { background: var(--claro); border-left: 5px solid var(--udg); padding: 0.25cm 0.35cm; margin: 0.35cm 0 0.4cm; font-size: 10.5pt; }
+  h2 { font-size: 13.5pt; color: #fff; background: var(--udg); padding: 0.08cm 0.25cm; margin: 0.45cm 0 0.2cm; break-after: avoid; }
+  h2 .mat { float: right; font-size: 8.5pt; font-weight: 400; opacity: 0.9; margin-top: 0.08cm; }
+  h3 { font-size: 11.5pt; color: var(--udg); margin: 0.3cm 0 0.1cm; break-after: avoid; }
+  p { margin: 0 0 0.18cm; text-align: justify; hyphens: auto; }
+  ul, ol { margin: 0.05cm 0 0.2cm; padding-left: 0.6cm; }
+  li { margin-bottom: 0.06cm; text-align: justify; }
+  table { border-collapse: collapse; width: 100%; font-size: 8.8pt; margin: 0.1cm 0 0.25cm; break-inside: avoid; }
+  th { background: var(--udg); color: #fff; font-weight: 600; padding: 0.06cm 0.12cm; text-align: center; }
+  td { border-bottom: 1px solid #cfd3de; padding: 0.05cm 0.12cm; text-align: center; vertical-align: top; }
+  td:first-child, th:first-child { text-align: left; }
+  tr.sel td { background: #fff2d9; font-weight: 600; }
+  .tcap { font-size: 8.8pt; font-weight: 700; margin: 0.15cm 0 0.03cm; font-family: "Montserrat", "Segoe UI", Arial, sans-serif; }
+  figure { margin: 0.15cm 0 0.3cm; break-inside: avoid; text-align: center; }
+  figure img { max-width: 100%; }
+  figcaption { font-size: 8.6pt; color: #333; margin-top: 0.06cm; text-align: left; }
+  .dos { display: grid; grid-template-columns: 1fr 1fr; gap: 0.45cm; align-items: start; }
+  .nota { font-size: 8.8pt; color: var(--gris); }
+  .caja { border: 1px solid #c3c8d6; border-radius: 4px; padding: 0.18cm 0.3cm; margin: 0.15cm 0 0.25cm; background: #fafbfd; break-inside: avoid; }
+  .caja b { color: var(--udg); }
+  .ref p { text-align: left; padding-left: 0.6cm; text-indent: -0.6cm; font-size: 9.5pt; margin-bottom: 0.08cm; }
+  mjx-container[display="true"] { margin: 0.12cm 0 !important; }
+  .salto { break-before: page; }
+</style>
+</head>
+<body>
+
+<div class="portada">
+  <div class="logos">
+    <div class="udg"><img src="../cartel/fig/logo_udg.png" alt="Universidad de Guadalajara"></div>
+    <div class="cu"><img src="../cartel/fig/logo_cugdl.png" alt="CUGDL — Centro Universitario de Guadalajara"></div>
+  </div>
+  <div class="tipo">Reporte final · Proyecto Integrador · Tercer semestre</div>
+  <h1>¿Qué tan pegajosa es la pobreza?</h1>
+  <div class="sub">Persistencia en la base de la distribución de bienes y desigualdad de oportunidades en México: evidencia de la ESRU-EMOVI 2023 con estadística y <i>Machine Learning</i></div>
+  <div class="meta">
+    <b>Equipo:</b> José Marihano Ponce Campos · Tanya Melina Alvarez Velazquez · Luis David Velazquez Raíz<br>
+    <b>Profesor:</b> Iván Alejandro Toledano Juárez<br>
+    <b>Materias:</b> Machine Learning e Inferencia Bayesiana / Matemáticas Aplicadas a la Ciencia de Datos<br>
+    <b>Institución:</b> Universidad de Guadalajara, Centro Universitario de Guadalajara (CUGDL) · Noviembre de 2026<br>
+    <b>Código y datos:</b> github.com/xmarihano-pixel/Movilidad-social- (notebooks 00–08, auditoría y bitácora de decisiones)
+  </div>
+</div>
+
+<div class="resumen"><b>Resumen.</b> Con la Encuesta ESRU de Movilidad Social en México 2023 (17,843 personas de 25 a 64 años), medimos cuántas personas que crecieron en el 20% de hogares con menos bienes siguen ahí de adultas y qué circunstancias de origen se asocian con quedarse. El <b>51.1%</b> (IC 95%: 46.3–55.4%) sigue en ese 20%; solo el 2.3% llega al 20% con más bienes. La persistencia es mayor para quienes crecieron en el Sur, en localidades rurales o hablan una lengua indígena, y estas desventajas se acumulan (de 30% a 82%). Comparamos seis modelos de clasificación: la regresión logística (AUC 0.70) iguala a <i>random forest</i> y <i>gradient boosting</i> y fue elegida por ser estable, rápida e interpretable. Una auditoría independiente reprodujo los resultados, corrigió la estimación de la incertidumbre y retiró un hallazgo que no se sostenía. Todos los resultados son asociaciones, no efectos causales.</div>
+
+<h2>1. Introducción y planteamiento del problema</h2>
+<p><b>Problemática.</b> La pobreza suele medirse como una fotografía: cuántas personas tienen carencias hoy. Esa medición no dice si la desventaja <b>se hereda</b>. La <b>movilidad social intergeneracional</b> compara la posición socioeconómica de una persona con la del hogar en el que creció; si el origen determina mucho el destino, hay poca igualdad de oportunidades. En México, el Centro de Estudios Espinosa Yglesias (CEEY) ha documentado una alta persistencia en los extremos y fuertes brechas regionales [2], en línea con la literatura internacional sobre la "geografía de las oportunidades" [3].</p>
+<p><b>Pregunta.</b> De quienes crecieron en el 20% de hogares con menos bienes de su generación, ¿cuántos siguen ahí de adultos y qué circunstancias de origen se asocian con quedarse?</p>
+<p><b>Objetivo.</b> Medir la persistencia en la base de la distribución y comparar modelos estadísticos y de Machine Learning que identifiquen las circunstancias asociadas, distinguiendo asociación, capacidad predictiva y causalidad.</p>
+<p><b>Relevancia.</b> Saber cuánto pesa el origen, y para quién pesa más, ayuda a orientar el debate sobre igualdad de oportunidades. Desde el punto de vista técnico, el ML permite evaluar muchas circunstancias a la vez y, sobre todo, medir el <b>límite</b> de lo que esas circunstancias explican.</p>
+
+<h2>2. Descripción de los datos</h2>
+<p><b>Fuente principal:</b> ESRU-EMOVI 2023 del CEEY [1]. Es una encuesta transversal con preguntas retrospectivas: cada persona describe el hogar en el que vivía a los 14 años (bienes, servicios, escolaridad y ocupación de sus padres, localidad) y su hogar actual. Tiene 17,843 observaciones, 296 variables, factor de expansión (representa a 60.0 millones de personas) y diseño muestral (estratos y unidades primarias de muestreo, UPM). <b>Fuentes complementarias:</b> medición de pobreza de CONEVAL 2022 [5] e informalidad laboral de la ENOE 2022 (INEGI) [6], resumidas por estado. Nuestro cálculo de pobreza nacional (36.3%) y pobreza extrema (7.1%) coincide con las cifras oficiales, lo que valida su procesamiento. Estas fuentes no comparten identificadores con la EMOVI, por lo que solo se usan como contexto estatal.</p>
+<p class="tcap">Tabla 1. Variables relevantes</p>
+<table>
+  <tr><th>Grupo</th><th>Variables</th><th>Uso</th></tr>
+  <tr><td>Objetivo</td><td><code>sigue_q1</code>: creció en el quintil 1 (Q1) de bienes y sigue en Q1 de adulto (1 = sí)</td><td>Variable a predecir</td></tr>
+  <tr><td>Origen (a los 14 años)</td><td>Índice de bienes del hogar; escolaridad de madre y padre; ocupación del padre; región y tamaño de localidad; hacinamiento; hermanos; servicios del barrio</td><td>Predictores</td></tr>
+  <tr><td>Características dadas</td><td>Sexo, cohorte de edad, lengua indígena, tono de piel autopercibido, autoadscripción étnica</td><td>Predictores</td></tr>
+  <tr><td>Destino (hoy)</td><td>Índice de bienes actual, escolaridad propia, empleo formal, ingreso</td><td>Construyen el objetivo o se usan solo en un modelo de mediación</td></tr>
+  <tr><td>Diseño</td><td>Factor de expansión, UPM, estrato</td><td>Ponderación e inferencia</td></tr>
+</table>
+<p><b>Tipo de problema.</b> <b>Clasificación binaria</b> (seguir o no en Q1) sobre las 2,674 personas que crecieron en Q1, con clases casi balanceadas (52/48). De forma complementaria se hizo clasificación en tres clases (ascenso, permanencia, descenso) y <b>clustering</b> (K-Means) para describir perfiles.</p>
+
+<h2>3. Limpieza y preparación de datos</h2>
+<ul>
+  <li><b>Valores faltantes.</b> Los códigos "No sabe" se convirtieron en faltantes explícitos. En los bienes del hogar son menos del 5% por variable y se reemplazaron por la media solo para construir el índice. La escolaridad del padre falta en 19% de los casos y la de la madre en 10%; como su ausencia no es aleatoria (quienes no tienen el dato del padre siguen en Q1 con más frecuencia: 60% vs 48%), se conservó como categoría propia ("No sabe / ausente") en lugar de imputarla. No se eliminó ninguna observación.</li>
+  <li><b>Construcción del objetivo.</b> Con 45 variables de bienes y servicios del hogar a los 14 años y 46 del hogar actual se construyeron dos índices de riqueza con análisis de componentes principales (PCA). Cada índice se convirtió en quintiles ponderados <b>dentro de cada cohorte</b> de edad, para comparar a cada persona con su propia generación.</li>
+  <li><b>Variables categóricas y escalamiento.</b> Codificación <i>one-hot</i> (las categorías con menos de 30 casos se agrupan automáticamente) y estandarización de las variables numéricas para la regresión logística. La imputación con la mediana y el escalamiento están dentro del <i>pipeline</i>, de modo que se ajustan solo con los datos de entrenamiento.</li>
+  <li><b>Selección de variables y <i>leakage</i>.</b> Se excluyeron como predictores todas las variables medidas en el destino (bienes actuales, escolaridad propia, ocupación, ingreso), porque forman parte de la respuesta.</li>
+  <li><b>Outliers y pesos.</b> No se eliminaron valores extremos (en un estudio de desigualdad pueden ser reales). Los factores de expansión se usan en las tasas descriptivas y en el modelo explicativo; los modelos predictivos se entrenaron sin pesos porque estos varían de 4 a 144,889 y desestabilizan el ajuste.</li>
+</ul>
+
+<h2>4. Análisis exploratorio</h2>
+<p>Los índices son consistentes con medidas externas: el índice de destino se correlaciona con el logaritmo del ingreso per cápita (r = 0.61) y el de origen con la escalera subjetiva de los entrevistados (r = 0.50). La matriz de transición (Figura 1) muestra que los extremos son los más persistentes: el 51% de quienes crecen en Q1 sigue en Q1 y el 55% de quienes crecen en Q5 sigue en Q5; solo el 2.3% pasa de Q1 a Q5. Con otras dos definiciones (quintiles sin separar por cohorte o destino medido con ingreso) la persistencia está entre 47% y 51%.</p>
+<div class="dos">
+  <figure><img src="../cartel/fig/f1_matriz.png" alt="Matriz de transición"><figcaption><b>Figura 1.</b> Porcentaje de cada quintil de origen (filas) que termina en cada quintil de destino (columnas). Ponderado.</figcaption></figure>
+  <figure><img src="../cartel/fig/f2_grupos.png" alt="Persistencia por grupo"><figcaption><b>Figura 2.</b> Porcentaje que sigue en Q1 por grupo, con IC 95% por bootstrap de conglomerados. *Escolaridad propia: mediadora, no es circunstancia de origen.</figcaption></figure>
+</div>
+<p><b>Relaciones identificadas (Figura 2).</b> La persistencia es de 64% entre quienes crecieron en el Sur y de 23% en el Norte; de 69% entre quienes hablan una lengua indígena y de 47% entre quienes no; de 55% en pueblos de menos de 2,500 habitantes. Al combinar las tres desventajas (Sur, pueblo y lengua indígena) la persistencia sube de 30% (ninguna) a 82% (las tres). La escolaridad propia separa mucho (56% con primaria o menos vs 18% con estudios profesionales), pero se mide al mismo tiempo que el destino. Por tono de piel, los intervalos de confianza se traslapan: no hay una brecha nacional significativa con estos datos.</p>
+<p><b>Comportamiento de los datos.</b> Con los factores de expansión, las 2,674 personas de Q1 equivalen a unas 815 observaciones independientes (tamaño efectivo de Kish). Por eso todas las tasas se reportan con intervalos que respetan el diseño muestral, y los grupos pequeños (Norte, n efectivo ≈ 44) tienen intervalos amplios. La relación entre la pobreza estatal (CONEVAL 2022) y la persistencia por estado (r ≈ 0.56) es solo exploratoria, porque la EMOVI no es representativa por estado.</p>
+
+<h2>5. Modelado de Machine Learning <span class="mat">Machine Learning e Inferencia Bayesiana</span></h2>
+<p><b>Validación.</b> Partición 80/20 estratificada (2,139 / 535 personas), validación cruzada estratificada de 5 particiones en el entrenamiento y semilla fija (42). <b>Métricas:</b> AUC (capacidad de ordenar el riesgo, independiente del umbral; métrica principal), exactitud balanceada, F1, puntuación de Brier (calibración) y tiempo de entrenamiento.</p>
+<p class="tcap">Tabla 2. Modelos utilizados</p>
+<table>
+  <tr><th>Modelo</th><th>Descripción breve</th><th>Justificación</th></tr>
+  <tr><td>Base: clase mayoritaria</td><td>Predice siempre la clase más frecuente</td><td>Piso mínimo (AUC = 0.5)</td></tr>
+  <tr><td>Base: solo índice de origen</td><td>Logística con un predictor</td><td>¿Basta con la riqueza de origen?</td></tr>
+  <tr><td>Regresión logística</td><td>Modelo lineal en los log-momios con regularización L2 ($C = 0.5$)</td><td>Interpretable (razones de momios); permite inferencia</td></tr>
+  <tr><td>Árbol de decisión</td><td>Particiones binarias por impureza de Gini (profundidad 4, ≥ 50 por hoja)</td><td>Reglas legibles; capta interacciones</td></tr>
+  <tr><td>Random forest</td><td>400 árboles con <i>bagging</i> y $\sqrt{p}$ variables por corte (≥ 20 por hoja)</td><td>No linealidad e interacciones con baja varianza</td></tr>
+  <tr><td>Gradient boosting</td><td>Árboles secuenciales (profundidad 3, tasa 0.05, 300 iteraciones)</td><td>Modelo complejo de referencia; base para SHAP</td></tr>
+</table>
+<p class="tcap">Tabla 3. Resultados (CV: validación cruzada en entrenamiento; prueba: 535 personas no vistas)</p>
+<table>
+  <tr><th>Modelo</th><th>AUC CV (±desv.)</th><th>AUC prueba</th><th>Exact. balanceada</th><th>F1</th><th>Brier</th><th>Tiempo (s)</th></tr>
+  <tr><td>Base: clase mayoritaria</td><td>0.500</td><td>0.500</td><td>0.500</td><td>0.682</td><td>0.250</td><td>0.02</td></tr>
+  <tr><td>Base: solo índice de origen</td><td>0.531 (±0.022)</td><td>0.556</td><td>0.533</td><td>0.642</td><td>0.248</td><td>0.01</td></tr>
+  <tr class="sel"><td>Regresión logística ★</td><td>0.696 (±0.011)</td><td>0.716</td><td>0.670</td><td>0.683</td><td>0.214</td><td>0.04</td></tr>
+  <tr><td>Árbol de decisión</td><td>0.652 (±0.028)</td><td>0.681</td><td>0.655</td><td>0.673</td><td>0.226</td><td>0.03</td></tr>
+  <tr><td>Random forest</td><td>0.690 (±0.014)</td><td>0.722</td><td>0.652</td><td>0.679</td><td>0.219</td><td>0.87</td></tr>
+  <tr><td>Gradient boosting</td><td>0.672 (±0.006)</td><td>0.721</td><td>0.659</td><td>0.671</td><td>0.213</td><td>0.24</td></tr>
+</table>
+<p><b>Análisis de resultados.</b> Todos los modelos superan claramente a las dos bases. Que el índice de origen por sí solo apenas supere al azar (AUC 0.53) indica que, <i>dentro</i> del 20% más pobre, lo que distingue a quien sale de quien se queda no es tener un poco más de bienes, sino el territorio, la lengua y la estructura del hogar. El árbol de decisión es el más débil e inestable. Random forest y gradient boosting igualan a la logística en la partición de prueba (diferencias ≤ 0.01), pero no la superan en validación cruzada. La matriz de confusión de la logística en prueba es equilibrada: recall de 0.69 para quienes siguen en Q1 y de 0.66 para quienes salen. Como las clases están casi balanceadas, usar <code>class_weight="balanced"</code> no cambia el AUC (0.696 en ambos casos).</p>
+<p><b>Modelo explicativo.</b> Para interpretar magnitudes se ajustó una regresión logística ponderada con errores estándar agrupados por UPM (Tabla 4). Con lo demás constante, crecer en el Sur (frente al Centro), en un pueblo (frente a una ciudad) o hablar una lengua indígena se asocia con 1.5 a 1.9 veces los momios de seguir en Q1. Estos resultados se mantienen sin factores de expansión. El tono de piel y el sexo no fueron significativos.</p>
+<div class="dos">
+  <div>
+    <p class="tcap">Tabla 4. Razones de momios (RM) seleccionadas</p>
+    <table>
+      <tr><th>Variable (referencia)</th><th>RM</th><th>IC 95%</th><th>p</th></tr>
+      <tr><td>Habla lengua indígena</td><td>1.88</td><td>1.23–2.88</td><td>0.004</td></tr>
+      <tr><td>Creció en el Sur (Centro)</td><td>1.84</td><td>1.28–2.65</td><td>0.001</td></tr>
+      <tr><td>Padre ausente / sin dato</td><td>1.57</td><td>1.05–2.36</td><td>0.029</td></tr>
+      <tr><td>Creció en pueblo (ciudad)</td><td>1.52</td><td>1.11–2.09</td><td>0.009</td></tr>
+      <tr><td>Tono oscuro (medio)</td><td>1.32</td><td>0.92–1.90</td><td>0.134</td></tr>
+      <tr><td>Mujer</td><td>1.30</td><td>0.98–1.73</td><td>0.070</td></tr>
+      <tr><td>Índice de origen (+1 punto)</td><td>0.65</td><td>0.53–0.81</td><td>&lt;0.001</td></tr>
+      <tr><td>Creció en el Norte (Centro)</td><td>0.39</td><td>0.19–0.80</td><td>0.010</td></tr>
+      <tr><td>Cohorte 55–64 (25–34)</td><td>0.19</td><td>0.10–0.35</td><td>&lt;0.001</td></tr>
+    </table>
+  </div>
+  <figure><img src="../cartel/fig/f4_momios.png" alt="Razones de momios"><figcaption><b>Figura 3.</b> Razones de momios con IC 95% (escala log). Gris = no significativo.</figcaption></figure>
+</div>
+<p><b>Interpretabilidad del modelo complejo.</b> La importancia por permutación (logística) y los valores SHAP (gradient boosting) coinciden en las tres variables principales: región de origen, cohorte e índice de origen. Que dos métodos con supuestos distintos lleguen al mismo orden refuerza la conclusión. <b>Perfiles (K-Means, k = 4):</b> el grupo "indígena, rural y del Sur" tiene 69% de persistencia y el grupo "urbano" 36%; estos perfiles son descriptivos, no causales.</p>
+
+<h2>6. Comparación y selección de modelos</h2>
+<p class="tcap">Tabla 5. Matriz de decisión</p>
+<table>
+  <tr><th>Criterio</th><th>Logística</th><th>Árbol</th><th>Random forest</th><th>Gradient boosting</th></tr>
+  <tr><td>Desempeño (AUC CV)</td><td>0.696</td><td>0.652</td><td>0.690</td><td>0.672</td></tr>
+  <tr><td>Robustez: AUC con 10 semillas (media ± desv.)</td><td>0.701 ± 0.002</td><td>—</td><td>0.697 ± 0.003</td><td>0.689 ± 0.004</td></tr>
+  <tr><td>Interpretabilidad</td><td>Alta (RM, IC, p)</td><td>Media (reglas)</td><td>Baja (requiere SHAP)</td><td>Baja (requiere SHAP)</td></tr>
+  <tr><td>Complejidad</td><td>55 coeficientes</td><td>≤ 16 hojas</td><td>400 árboles</td><td>300 árboles</td></tr>
+  <tr><td>Tiempo de entrenamiento</td><td>0.04 s</td><td>0.03 s</td><td>0.87 s</td><td>0.24 s</td></tr>
+  <tr><td>Comportamiento ante estos datos</td><td>Calibrada por subgrupo; se satura con poca muestra</td><td>Inestable entre particiones</td><td>Estable; sin ganancia por no linealidad</td><td>Estable; sin ganancia</td></tr>
+</table>
+<div class="dos">
+  <figure><img src="../cartel/fig/f5_modelos.png" alt="Comparación de modelos"><figcaption><b>Figura 4.</b> AUC en validación cruzada (± desviación) y tiempo de entrenamiento.</figcaption></figure>
+  <figure><img src="../../figures/11_curva_aprendizaje.png" alt="Curva de aprendizaje"><figcaption><b>Figura 5.</b> Curva de aprendizaje de la logística: la validación se estabiliza cerca de 0.70 y la brecha con el entrenamiento es pequeña (≈ 0.03).</figcaption></figure>
+</div>
+<p><b>Selección.</b> Elegimos la <b>regresión logística</b> con una regla fijada antes de ver los resultados: si un modelo interpretable está a menos de 0.01 de AUC del mejor, se prefiere el interpretable. La logística obtuvo el AUC más alto en validación cruzada y con 10 semillas, es la más estable y una de las más rápidas, y sus parámetros tienen interpretación directa. Que los modelos no lineales no la superen sugiere que, en estos datos, la relación es esencialmente aditiva; lo confirma la prueba de interacciones (Sur × pueblo × lengua: p = 0.20). La curva de aprendizaje (Figura 5) muestra que más datos ayudarían poco: <b>el límite está en la información disponible</b>, no en el algoritmo.</p>
+
+<h2>7. Desarrollo matemático y fundamentos teóricos <span class="mat">Matemáticas Aplicadas a la Ciencia de Datos</span></h2>
+
+<h3>7.1 Regresión logística (modelo seleccionado)</h3>
+<p><b>Formulación.</b> Sea $y_i \in \{0,1\}$ el indicador de que la persona $i$ sigue en Q1 y $\mathbf{x}_i \in \mathbb{R}^p$ su vector de circunstancias de origen (con las categorías codificadas como variables indicadoras). El modelo supone que</p>
+$$P(y_i = 1 \mid \mathbf{x}_i) = p_i = \sigma(\beta_0 + \mathbf{x}_i^\top \boldsymbol\beta) = \frac{1}{1 + e^{-(\beta_0 + \mathbf{x}_i^\top \boldsymbol\beta)}}.$$
+<p>La función sigmoide $\sigma$ lleva cualquier número real al intervalo $(0,1)$. Al despejar se obtiene que el modelo es <b>lineal en los log-momios</b>:</p>
+$$\log\frac{p_i}{1-p_i} = \beta_0 + \mathbf{x}_i^\top\boldsymbol\beta .$$
+<p><b>Interpretación de los parámetros.</b> Si la variable $x_{j}$ aumenta en una unidad y lo demás queda fijo, los momios se multiplican por $e^{\beta_j}$, que es la <b>razón de momios</b>. En nuestros datos, para "habla lengua indígena" $\hat\beta = \ln 1.88 = 0.63$: los momios de seguir en Q1 son 1.88 veces los de una persona comparable que no la habla. Para el índice de origen, $e^{\hat\beta} = 0.65$: cada punto adicional del índice reduce los momios en 35%.</p>
+<p><b>Función de costo.</b> Los parámetros se estiman maximizando la verosimilitud de Bernoulli $L(\boldsymbol\beta) = \prod_i p_i^{y_i}(1-p_i)^{1-y_i}$. Equivale a minimizar la entropía cruzada (<i>log loss</i>) con un término de regularización L2 que evita coeficientes inflados en categorías pequeñas:</p>
+$$J(\boldsymbol\beta) = -\sum_{i=1}^{n}\Big[y_i \log p_i + (1-y_i)\log(1-p_i)\Big] + \frac{1}{2C}\lVert\boldsymbol\beta\rVert_2^2, \qquad C = 0.5 .$$
+<p><b>Algoritmo de optimización.</b> El gradiente y la matriz hessiana son</p>
+$$\nabla J = X^\top(\mathbf{p} - \mathbf{y}) + \tfrac{1}{C}\boldsymbol\beta, \qquad H = X^\top W X + \tfrac{1}{C} I, \quad W = \mathrm{diag}\big(p_i(1-p_i)\big).$$
+<p>Como $W$ tiene entradas positivas, $H$ es definida positiva: $J$ es <b>estrictamente convexa</b> y tiene un único mínimo global. No hay solución cerrada, así que se usa un método iterativo. scikit-learn usa L-BFGS (cuasi-Newton, que aproxima $H$ con los últimos gradientes); el modelo explicativo de statsmodels usa el método de Newton en su forma de mínimos cuadrados reponderados iterativamente (IRLS): $\boldsymbol\beta^{(t+1)} = \boldsymbol\beta^{(t)} - H^{-1}\nabla J$.</p>
+<p><b>Una consecuencia matemática que usamos.</b> En el óptimo sin penalización, $\nabla J = 0$ implica $X^\top(\mathbf{y} - \mathbf{p}) = 0$. Para la columna de una variable indicadora (por ejemplo, "tono oscuro") esto significa que la probabilidad media predicha del grupo es igual a su tasa observada: el modelo queda <b>calibrado por construcción</b> en cada categoría incluida. Esto explica por qué, con predicciones fuera de muestra, la brecha real − predicha por tono de piel fue prácticamente cero.</p>
+<p><b>Supuestos.</b> (1) Linealidad en los log-momios; las variables categóricas la cumplen por construcción y la prueba de interacciones no la rechazó. (2) Independencia entre observaciones; no se cumple dentro de una misma UPM, por lo que la inferencia usa errores agrupados. (3) Ausencia de multicolinealidad perfecta; el factor de inflación de la varianza (VIF) máximo es 2.7. (4) Ausencia de separación perfecta: con solo 2 madres profesionistas en Q1, $\hat\beta \to \infty$ (RM ≈ 6×10⁸), así que se agruparon las categorías en "Secundaria o más".</p>
+<p><b>Inferencia con diseño muestral.</b> El modelo explicativo maximiza una pseudo-verosimilitud ponderada por los factores $w_i$. Su varianza se estima con el estimador "sándwich" por conglomerados $g$ (UPM):</p>
+$$\widehat{V}(\hat{\boldsymbol\beta}) = \big(X^\top W_w X\big)^{-1}\Big(\sum_g \mathbf{u}_g\mathbf{u}_g^\top\Big)\big(X^\top W_w X\big)^{-1}, \qquad \mathbf{u}_g = \sum_{i\in g} w_i (y_i - p_i)\,\mathbf{x}_i .$$
+<p>En la auditoría, este estimador se programó a mano y sus errores estándar coincidieron exactamente con los de statsmodels.</p>
+
+<h3>7.2 Random forest</h3>
+<p><b>Árbol de clasificación.</b> Un árbol divide el espacio de predictores en regiones $R_1,\dots,R_M$ y predice en cada una la proporción $\hat p_m$ de casos con $y = 1$. En cada nodo elige la variable $j$ y el corte $s$ que más reducen la <b>impureza de Gini</b>:</p>
+$$G(R) = \sum_{k\in\{0,1\}} \hat p_k(1-\hat p_k) = 2\hat p(1-\hat p), \qquad \Delta(j,s) = G(R) - \frac{|R_L|}{|R|}G(R_L) - \frac{|R_R|}{|R|}G(R_R).$$
+<p><b>Función de costo y optimización.</b> El árbol minimiza la impureza ponderada de las hojas. Encontrar el árbol óptimo es un problema NP-difícil, así que se usa un <b>algoritmo voraz</b> (CART): en cada nodo se prueban todos los cortes posibles y se elige el de mayor $\Delta$, hasta cumplir el criterio de parada (mínimo 20 personas por hoja).</p>
+<p><b>Bosque.</b> Se entrenan $B = 400$ árboles, cada uno sobre una muestra <i>bootstrap</i> de los datos y considerando en cada corte solo $m = \sqrt{p}$ variables elegidas al azar. La predicción es el promedio $\hat p(\mathbf{x}) = \frac{1}{B}\sum_{b=1}^{B}\hat p_b(\mathbf{x})$. Si cada árbol tiene varianza $\sigma^2$ y la correlación entre árboles es $\rho$:</p>
+$$\mathrm{Var}\big(\hat p(\mathbf{x})\big) = \rho\,\sigma^2 + \frac{1-\rho}{B}\,\sigma^2 .$$
+<p>Promediar muchos árboles elimina el segundo término, y elegir variables al azar reduce $\rho$. Por eso el bosque es mucho más estable que un solo árbol: la desviación entre semillas fue de 0.003, frente a 0.028 entre particiones para el árbol.</p>
+<p><b>Supuestos e interpretación.</b> Random forest no supone una forma funcional: puede captar no linealidades e interacciones. Su costo es que no tiene parámetros interpretables; para interpretarlo se usan la importancia por permutación (pérdida de AUC al revolver una variable) y los valores SHAP, que reparten cada predicción entre las variables según la teoría de juegos (valores de Shapley) [9]. En este proyecto, que el bosque no superara a la logística es evidencia de que la relación es esencialmente aditiva.</p>
+
+<h3>7.3 Componentes principales (índice de riqueza) e interpretación de métricas</h3>
+<p><b>PCA.</b> Con la matriz $Z$ de bienes estandarizados, el índice es la proyección sobre el primer vector propio de la matriz de covarianzas: $\mathbf{v}_1 = \arg\max_{\lVert\mathbf{v}\rVert=1}\mathbf{v}^\top\Sigma\mathbf{v}$, es decir, $\Sigma\mathbf{v}_1 = \lambda_1\mathbf{v}_1$, y el índice de cada persona es $s_i = \mathbf{z}_i^\top\mathbf{v}_1$ [7]. El primer componente explica el 21.6% de la varianza en el origen; sus cargas más altas son lavadora, refrigerador, baño, calentador y agua entubada, es decir, el índice resume sobre todo el acceso a servicios básicos.</p>
+<p><b>AUC.</b> Es la probabilidad de que el modelo asigne mayor riesgo a una persona que sigue en Q1 que a una que sale, elegidas al azar: $\mathrm{AUC} = P(\hat p_i > \hat p_j \mid y_i = 1, y_j = 0)$. Un AUC de 0.70 significa que el modelo ordena correctamente el 70% de esos pares. <b>Brier:</b> $\frac{1}{n}\sum_i(\hat p_i - y_i)^2$ mide la calibración (0.214 frente a 0.25 del baseline).</p>
+
+<h2>8. Resultados y discusión</h2>
+<div class="dos">
+  <div>
+    <p><b>Interpretación de métricas.</b> Un AUC de 0.70 es moderado, y eso es un hallazgo: las circunstancias observadas explican solo una parte del destino. El resto corresponde a factores que la encuesta no mide (calidad escolar, redes, salud, choques económicos), no a un "mérito" demostrado. El Brier de 0.214 y la curva de calibración (Figura 6) indican probabilidades razonablemente bien calibradas.</p>
+    <p><b>Fortalezas.</b> Encuesta representativa con origen y destino de la misma persona; resultados robustos con tres definiciones del objetivo y con y sin pesos; coincidencia entre el modelo interpretable y el complejo; reproducción completa (29 de 29 tablas idénticas).</p>
+  </div>
+  <figure><img src="../../figures/10_calibracion.png" alt="Curva de calibración"><figcaption><b>Figura 6.</b> Curva de calibración en el conjunto de prueba: las probabilidades predichas siguen de cerca las frecuencias observadas.</figcaption></figure>
+</div>
+<p><b>Limitaciones y fuentes de sesgo.</b> (1) <b>Recuerdo:</b> el origen se reporta de memoria; por eso se usan bienes, que se recuerdan mejor que el ingreso. (2) <b>Supervivencia:</b> no están quienes murieron o emigraron. (3) <b>Variables medidas hoy:</b> la lengua, el tono de piel autopercibido y la autoadscripción podrían reflejar en parte el destino. (4) <b>Diseño transversal:</b> no permite afirmar causalidad. (5) <b>Muestra efectiva:</b> pequeña en algunos grupos (Norte) y no representativa por estado. (6) La escolaridad y el empleo se miden junto con el destino, por lo que no son circunstancias de origen.</p>
+<p><b>Reflexión sobre el comportamiento de los modelos y sobre el proceso.</b> Los modelos no lineales no aportaron ganancia, lo que coincide con una estructura aditiva de las desventajas. Una auditoría independiente detectó dos problemas que corregimos: (a) los intervalos de confianza ignoraban el diseño muestral (el IC titular pasó de 48–55% a 46–55%), y (b) un supuesto "sesgo del modelo de 11 puntos contra las personas de tono oscuro" provenía de una sola partición de prueba con 114 personas; con predicciones fuera de muestra para las 2,674 personas la brecha es prácticamente nula y el hallazgo se retiró. Al corregir la categoría de referencia de la localidad apareció un resultado nuevo: crecer en un pueblo sí se asocia con más persistencia (RM 1.52). <b>Escenarios hipotéticos</b> (modelo de mediación): bajo el supuesto de un nivel educativo más y empleo formal, y manteniendo las relaciones estimadas, la persistencia sería unos 16 puntos menor (IC: 12 a 19). Son asociaciones, no efectos de política.</p>
+
+<h2>9. Conclusiones y trabajo futuro</h2>
+<p><b>Principales hallazgos.</b> (1) La desventaja es pegajosa: cerca de la mitad de quienes crecen en el 20% de hogares con menos bienes sigue ahí de adulta, y casi nadie llega al extremo superior. (2) La persistencia se concentra en el Sur, en localidades rurales y entre hablantes de lengua indígena, y estas desventajas se suman. (3) La escolaridad es la característica más asociada con haber salido, pero no basta: el 43% de quienes superaron la escolaridad de sus padres sigue en Q1. (4) La regresión logística iguala a los modelos complejos; las circunstancias de origen observadas predicen el destino solo de forma moderada (AUC ≈ 0.70).</p>
+<p><b>Limitaciones identificadas.</b> Diseño transversal y retrospectivo, sin causalidad; validez nacional y regional, no estatal; variables de identidad medidas en el presente.</p>
+<p><b>Mejoras y líneas de trabajo futuras.</b></p>
+<ol>
+  <li>Comparar con la EMOVI 2011 y 2017 con la misma metodología, para separar el efecto de cohorte del ciclo de vida.</li>
+  <li>Unir indicadores municipales del censo del año en que cada persona tenía 14 años (la EMOVI registra el municipio de origen), en lugar de datos de 2022.</li>
+  <li>Usar un diseño cuasi-causal para la educación (por ejemplo, reformas de escolaridad obligatoria como experimento natural).</li>
+  <li>Modelos multinivel (persona–municipio) y estimación de áreas pequeñas para obtener resultados estatales defendibles.</li>
+  <li>Un enfoque bayesiano jerárquico por región, que permitiría estimar mejor las tasas de los grupos pequeños compartiendo información entre regiones.</li>
+</ol>
+
+<h2>10. Referencias</h2>
+<div class="ref">
+  <p>[1] Centro de Estudios Espinosa Yglesias (CEEY). <i>Encuesta ESRU de Movilidad Social en México 2023 (ESRU-EMOVI 2023)</i>: base de datos y diccionario. https://ceey.org.mx</p>
+  <p>[2] CEEY (2019). <i>Informe de Movilidad Social en México 2019: Hacia la igualdad regional de oportunidades</i>. Ciudad de México: CEEY.</p>
+  <p>[3] Chetty, R., Hendren, N., Kline, P. y Saez, E. (2014). Where is the land of opportunity? The geography of intergenerational mobility in the United States. <i>The Quarterly Journal of Economics, 129</i>(4), 1553–1623. https://doi.org/10.1093/qje/qju022</p>
+  <p>[4] Campos-Vázquez, R. M. y Medina-Cortina, E. M. (2019). Skin color and social mobility: Evidence from Mexico. <i>Demography, 56</i>(1), 321–343.</p>
+  <p>[5] CONEVAL (2023). <i>Medición de la pobreza 2022: programas de cálculo y bases de datos</i>. https://www.coneval.org.mx</p>
+  <p>[6] INEGI (2023). <i>Encuesta Nacional de Ingresos y Gastos de los Hogares 2022</i> y <i>Encuesta Nacional de Ocupación y Empleo 2022</i>. https://www.inegi.org.mx</p>
+  <p>[7] Filmer, D. y Pritchett, L. H. (2001). Estimating wealth effects without expenditure data—or tears. <i>Demography, 38</i>(1), 115–132.</p>
+  <p>[8] Breiman, L. (2001). Random forests. <i>Machine Learning, 45</i>(1), 5–32. https://doi.org/10.1023/A:1010933404324</p>
+  <p>[9] Lundberg, S. M. y Lee, S.-I. (2017). A unified approach to interpreting model predictions. <i>Advances in Neural Information Processing Systems, 30</i>.</p>
+  <p>[10] Hosmer, D. W., Lemeshow, S. y Sturdivant, R. X. (2013). <i>Applied Logistic Regression</i> (3.ª ed.). Wiley.</p>
+  <p>[11] Pedregosa, F. et al. (2011). Scikit-learn: Machine learning in Python. <i>Journal of Machine Learning Research, 12</i>, 2825–2830. · Seabold, S. y Perktold, J. (2010). statsmodels. · Bibliotecas: pandas, NumPy, SHAP, matplotlib, pyreadstat (versiones en <code>requirements.txt</code>).</p>
+  <p class="nota" style="padding-left:0">Uso de IA generativa: se utilizó como apoyo para programar, documentar y auditar; las decisiones metodológicas y la interpretación fueron revisadas y aprobadas por el equipo (bitácora de decisiones en el repositorio).</p>
+</div>
+
+</body>
+</html>
